@@ -44,3 +44,12 @@ Setiap kartu mobil memiliki deskripsi ringkas dan tombol **Tanya via WhatsApp**.
 - Detail mobil sekarang menampilkan data teknis khusus per model: mesin/motor, tenaga, torsi, transmisi atau baterai, jarak tempuh EV, sistem penggerak, dan kapasitas.
 - Tombol WhatsApp tetap tersedia di bawah spesifikasi.
 - Spesifikasi ditulis sebagai referensi varian/pasar Indonesia. Beberapa angka memiliki rentang karena berbeda menurut trim, tahun produksi, dan standar pengujian (misalnya WLTP, NEDC, atau CLTC). Konfirmasikan tipe unit aktual sebelum transaksi.
+
+
+v9: Mobile catalog uses a compact two-column card layout with shorter vehicle images, condensed text, and smaller action buttons. Desktop/tablet layouts remain unchanged.
+
+
+v10: Catalog initially shows 4 vehicles on mobile and 8 on wider screens, with a show-all/show-less control. Search and category filters show matching results. Contact section redesigned with direct WhatsApp action and showroom information cards.
+
+
+v11: All vehicle photos are loaded through online image URLs. No local photo assets or image folder are required. Models without a fixed photo URL receive a remote model-tagged image fallback.

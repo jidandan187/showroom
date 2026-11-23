@@ -42,6 +42,15 @@ const cars = [
   {id:38,brand:"Chery",name:"J6",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik berdesain boxy dengan tampilan adventure.",price:"Tanya harga",image:""}
 ];
 
+// Semua foto kendaraan menggunakan URL online; tidak membutuhkan folder asset lokal.
+// Model yang belum memiliki URL foto tetap mendapat gambar online berdasarkan nama mobil.
+cars.forEach(car => {
+  if (!car.image) {
+    const tags = `${car.brand}-${car.name}-car`.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+    car.image = `https://loremflickr.com/1000/700/${tags}?lock=${car.id}`;
+  }
+});
+
 // Deskripsi detail unik untuk halaman informasi setiap model.
 const detailDescriptions = {
   "1": "Honda Brio Satya merupakan city car kompak yang cocok untuk aktivitas perkotaan. Dimensinya praktis untuk bermanuver dan parkir, sementara kabin lima penumpang membuatnya pas sebagai kendaraan harian maupun mobil pertama.",
@@ -1333,12 +1342,15 @@ const vehicleSpecs = {
 };
 
 const grid = document.querySelector("#carGrid");
+const catalogMoreBtn = document.querySelector("#catalogMoreBtn");
+const catalogMoreNote = document.querySelector("#catalogMoreNote");
 const searchInput = document.querySelector("#searchInput");
 const resultCount = document.querySelector("#resultCount");
 const emptyState = document.querySelector("#emptyState");
 const dialog = document.querySelector("#carDialog");
 const dialogContent = document.querySelector("#dialogContent");
 let activeFilter = "all";
+let showAllCars = false;
 
 function whatsappLink(car){
   const message = car
@@ -1356,9 +1368,15 @@ function renderCars(){
     const matchesQuery = `${car.brand} ${car.name} ${car.year} ${car.category}`.toLowerCase().includes(query);
     return matchesType && matchesQuery;
   });
+  const isMobile = window.matchMedia("(max-width: 650px)").matches;
+  const pageSize = isMobile ? 4 : 8;
+  const visibleCars = (showAllCars || query || activeFilter !== "all")
+    ? filtered
+    : filtered.slice(0, pageSize);
+
   resultCount.textContent = `${String(filtered.length).padStart(2,"0")} MOBIL`;
   emptyState.hidden = filtered.length !== 0;
-  grid.innerHTML = filtered.map(car => `
+  grid.innerHTML = visibleCars.map(car => `
     <article class="car-card">
       <div class="car-image">
         ${car.image ? `<img src="${car.image}" alt="${car.brand} ${car.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.hidden=false"><div class="photo-placeholder" hidden><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>FOTO MODEL MENYUSUL</small></div>` : photoPlaceholder(car)}
@@ -1371,6 +1389,16 @@ function renderCars(){
         <a class="car-wa-button" href="${whatsappLink(car)}" target="_blank" rel="noopener">TANYA VIA WHATSAPP <span>↗</span></a>
       </div>
     </article>`).join("");
+
+  const hasMore = filtered.length > pageSize && !query && activeFilter === "all";
+  catalogMoreBtn.hidden = !hasMore && !showAllCars;
+  catalogMoreBtn.innerHTML = showAllCars
+    ? 'TAMPILKAN LEBIH SEDIKIT <span>↑</span>'
+    : 'LIHAT SEMUA MOBIL <span>↗</span>';
+  catalogMoreNote.textContent = showAllCars
+    ? `MENAMPILKAN SEMUA ${filtered.length} MOBIL`
+    : `MENAMPILKAN ${visibleCars.length} DARI ${filtered.length} MOBIL`;
+  catalogMoreNote.hidden = filtered.length <= pageSize;
 }
 function openDetail(id){
   const car = cars.find(item => item.id === Number(id));
@@ -1399,9 +1427,12 @@ document.querySelectorAll(".filter-btn").forEach(button => button.addEventListen
   document.querySelector(".filter-btn.active")?.classList.remove("active");
   button.classList.add("active");
   activeFilter = button.dataset.filter;
+  showAllCars = false;
   renderCars();
 }));
-searchInput.addEventListener("input", renderCars);
+searchInput.addEventListener("input", () => { showAllCars = false; renderCars(); });
+catalogMoreBtn.addEventListener("click", () => { showAllCars = !showAllCars; renderCars(); if(!showAllCars) document.querySelector("#katalog").scrollIntoView({behavior:"smooth",block:"start"}); });
+window.addEventListener("resize", () => { if(!showAllCars && !searchInput.value.trim() && activeFilter === "all") renderCars(); });
 grid.addEventListener("click", event => {
   const button = event.target.closest("[data-detail]");
   if(button) openDetail(button.dataset.detail);
@@ -1427,6 +1458,7 @@ renderCars();
 // Quick action from the EV spotlight section.
 document.querySelector("[data-show-electric]")?.addEventListener("click", () => {
   activeFilter = "listrik";
+  showAllCars = false;
   document.querySelectorAll(".filter-btn").forEach(button => button.classList.toggle("active", button.dataset.filter === "listrik"));
   renderCars();
 });

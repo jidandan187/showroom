@@ -115,3 +115,131 @@
  .dialog-copy{padding:25px 20px}
  .spec-list li{grid-template-columns:105px minmax(0,1fr);gap:10px}
 }
+
+
+/* v9 — mobile catalog: compact two-column showroom grid */
+@media(max-width:650px){
+  .car-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px 12px;
+    align-items:stretch;
+  }
+  .car-card{
+    display:flex;
+    flex-direction:column;
+    box-shadow:3px 3px 0 var(--ink);
+  }
+  .car-image{
+    height:clamp(112px,34vw,148px);
+  }
+  .car-info{
+    padding:11px 10px 12px;
+    display:flex;
+    flex:1;
+    flex-direction:column;
+  }
+  .car-meta{
+    gap:5px;
+    font-size:7px;
+    line-height:1.35;
+    flex-wrap:wrap;
+  }
+  .car-info h3{
+    font-size:clamp(16px,4.4vw,20px);
+    line-height:1.02;
+    margin:9px 0 6px;
+    overflow-wrap:anywhere;
+  }
+  .car-desc{
+    font-size:10px;
+    line-height:1.4;
+    min-height:0;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .car-bottom{
+    margin-top:auto;
+    padding-top:10px;
+    gap:7px;
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .car-price{
+    font-size:11px;
+    line-height:1.25;
+  }
+  .detail-btn{
+    padding:7px 0;
+    font-size:8px;
+  }
+  .car-wa-button{
+    margin-top:9px;
+    padding:9px 8px;
+    font-size:7px;
+    letter-spacing:.04em;
+    box-shadow:2px 2px 0 var(--ink);
+  }
+  .car-wa-button span{font-size:12px}
+}
+
+/* Extra-narrow phones: keep the two-column layout readable */
+@media(max-width:360px){
+  .car-grid{gap:12px 9px}
+  .car-info{padding:9px 8px 10px}
+  .car-meta{font-size:6px}
+  .car-info h3{font-size:15px}
+  .car-wa-button{font-size:6px;padding:8px 6px}
+}
+
+
+/* v10 — progressive catalog and upgraded contact section */
+.catalog-more-wrap{display:flex;flex-direction:column;align-items:center;gap:13px;padding:34px 0 8px}
+.catalog-more-note{margin:0;font-size:9px;font-weight:800;letter-spacing:.14em;color:var(--muted)}
+.catalog-more-btn{min-width:240px;justify-content:center;gap:28px;cursor:pointer}
+.catalog-more-btn[hidden]{display:none}
+.contact-heading{display:grid;grid-template-columns:1.2fr .8fr;align-items:end;gap:7vw;margin:28px 0 42px}
+.contact-kicker{font-size:9px;font-weight:800;letter-spacing:.18em;color:var(--orange);margin:0 0 18px}
+.contact h2{font-size:clamp(58px,8.4vw,116px);line-height:.88;margin:0}
+.contact h2 em{font-style:normal;color:var(--orange)}
+.contact-intro{max-width:390px;margin:0 0 5px;color:#c8c4bb;font-size:14px;line-height:1.8}
+.contact-action-panel{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 22px;margin-bottom:16px;background:#292927;border:1px solid #484844}
+.contact-action-copy{display:grid;grid-template-columns:10px 1fr;column-gap:12px;align-items:center}
+.contact-action-copy b{font-size:11px;letter-spacing:.08em}
+.contact-action-copy small{grid-column:2;color:#aaa69e;font-size:10px;margin-top:5px}
+.contact-online-dot{width:8px;height:8px;border-radius:50%;background:#35c77b;box-shadow:0 0 0 4px rgba(53,199,123,.13)}
+.contact-info-grid{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:12px}
+.contact-info-card{position:relative;min-height:190px;padding:20px;background:#292927;border:1px solid #484844;display:flex;flex-direction:column;align-items:flex-start}
+.contact-card-index{font-size:8px;color:#aaa69e;font-weight:800;letter-spacing:.14em}
+.contact-monogram{font:700 48px/.9 var(--display);letter-spacing:-.09em;margin:27px 0 14px}
+.contact-monogram span{color:var(--orange)}
+.contact-brand-card>b{font-size:11px;letter-spacing:.08em}
+.contact-brand-card>small{font-size:9px;color:#aaa69e;margin-top:6px}
+.contact-wa-card{background:var(--orange);color:var(--ink);border-color:var(--ink);box-shadow:4px 4px 0 #111}
+.contact-wa-card .contact-card-index{color:#5b3219}
+.contact-card-icon{position:absolute;right:19px;top:17px;font-size:20px}
+.contact-wa-card>small{font-size:8px;font-weight:800;letter-spacing:.15em;margin-top:28px}
+.contact-wa-card .contact-number{font:700 clamp(19px,2.2vw,27px)/1.1 var(--display);letter-spacing:-.05em;color:var(--ink);text-decoration:none;margin-top:9px}
+.contact-wa-card .contact-card-hint{font-size:9px;margin-top:8px;color:#5b3219}
+.contact-service-card{gap:7px}
+.contact-service-card>b{font-size:10px;letter-spacing:.06em;margin-top:17px}
+.contact-service-card>p{font-size:10px;line-height:1.5;color:#c8c4bb;margin:0}
+@media(max-width:650px){
+  .catalog-more-wrap{padding:26px 0 4px}
+  .catalog-more-btn{width:100%;min-width:0}
+  .contact{padding-top:55px;padding-bottom:42px}
+  .contact-top{align-items:flex-start}
+  .contact-top>span{max-width:120px;text-align:right;line-height:1.5}
+  .contact-heading{grid-template-columns:1fr;gap:18px;margin:24px 0 25px}
+  .contact h2{font-size:clamp(49px,13vw,72px)}
+  .contact-intro{font-size:12px;line-height:1.7;max-width:100%}
+  .contact-action-panel{padding:15px;align-items:stretch;flex-direction:column;gap:15px}
+  .contact-action-panel .button{width:100%;justify-content:space-between}
+  .contact-info-grid{grid-template-columns:1fr;gap:10px}
+  .contact-info-card{min-height:150px;padding:17px}
+  .contact-monogram{margin:18px 0 10px;font-size:42px}
+  .contact-wa-card>small{margin-top:20px}
+  .contact-wa-card .contact-number{font-size:25px}
+  .contact-service-card{min-height:170px}
+}

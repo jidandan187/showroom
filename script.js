@@ -114,7 +114,7 @@ document.querySelector("#dialogClose").addEventListener("click", () => dialog.cl
 dialog.addEventListener("click", event => { if(event.target === dialog) dialog.close(); });
 document.querySelector("#mainWhatsapp").href = whatsappLink();
 document.querySelector("#mainWhatsapp").addEventListener("click", event => {
-  if(CONTACT_WA === "6280000000"){
+  if(CONTACT_WA === "6287886555076"){
     event.preventDefault();
     alert("Nomor WhatsApp belum diatur. Ganti CONTACT_WA di bagian atas file script.js dengan nomor resmi Thomy Showroom.");
   }

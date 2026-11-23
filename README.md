@@ -34,3 +34,13 @@ Upload isi folder ini ke root repository, lalu aktifkan Settings → Pages → D
 - Tombol WhatsApp mengambang tersedia di desktop dan mobile.
 - Bagian sorotan Electric Edit menampilkan 25 model EV dan tombol filter mobil listrik.
 - Jumlah katalog dihitung otomatis dari hasil filter.
+
+
+## Detail mobil dan WhatsApp (v7)
+Setiap kartu mobil memiliki deskripsi ringkas dan tombol **Tanya via WhatsApp**. Tombol tersebut membuka chat dengan pesan otomatis berisi merek, model, dan tahun mobil yang dipilih. Tombol Info Mobil membuka detail spesifikasi dan deskripsi yang lebih lengkap.
+
+
+## Update v8 — technical specifications
+- Detail mobil sekarang menampilkan data teknis khusus per model: mesin/motor, tenaga, torsi, transmisi atau baterai, jarak tempuh EV, sistem penggerak, dan kapasitas.
+- Tombol WhatsApp tetap tersedia di bawah spesifikasi.
+- Spesifikasi ditulis sebagai referensi varian/pasar Indonesia. Beberapa angka memiliki rentang karena berbeda menurut trim, tahun produksi, dan standar pengujian (misalnya WLTP, NEDC, atau CLTC). Konfirmasikan tipe unit aktual sebelum transaksi.

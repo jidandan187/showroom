@@ -6,7 +6,7 @@ Website katalog showroom mobil berbasis HTML, CSS, dan JavaScript murni. Bisa di
 - `index.html` — halaman utama dan section katalog
 - `style.css` — visual dan responsive layout
 - `script.js` — data mobil, filter, pencarian, detail, WhatsApp
-- `assets/` — tempat menyimpan aset tambahan
+- `assets/` — tempat menyimpan aset tambahan (versi ini tidak membutuhkan folder foto lokal karena foto model tertentu dimuat dari URL resmi produsen)
 
 ## Sebelum dipublikasikan
 1. Buka `script.js`.
@@ -19,3 +19,18 @@ Katalog demo berisi 18 model yang umum/relevan di pasar Indonesia, termasuk city
 
 ## GitHub Pages
 Upload isi folder ini ke root repository, lalu aktifkan Settings → Pages → Deploy from a branch → `main` → `/(root)`.
+
+
+## Foto katalog
+- Foto Hyundai IONIQ 5, KONA Electric, dan IONIQ 6 menggunakan URL gambar dari situs resmi Hyundai Indonesia.
+- Foto Wuling Air ev, BinguoEV, dan Cloud EV menggunakan URL gambar dari situs resmi Wuling.
+- Foto BYD Seal, Atto 3, dan M6 menggunakan URL gambar dari situs resmi BYD Indonesia.
+- Model lain yang belum memiliki foto model terverifikasi menampilkan placeholder dengan nama merek/model, bukan foto mobil yang berpotensi salah.
+- Foto eksternal memerlukan koneksi internet dan dapat berubah jika produsen mengganti URL. Untuk stabilitas jangka panjang, unduh foto yang berizin dan simpan di folder `assets/cars/`, lalu ubah URL pada data `cars` di `script.js` menjadi path lokal.
+
+
+## Update v5
+- Nomor WhatsApp showroom: 6287886555076 (format internasional tanpa tanda +).
+- Tombol WhatsApp mengambang tersedia di desktop dan mobile.
+- Bagian sorotan Electric Edit menampilkan 25 model EV dan tombol filter mobil listrik.
+- Jumlah katalog dihitung otomatis dari hasil filter.

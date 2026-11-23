@@ -15,31 +15,31 @@ const cars = [
   {id:11,brand:"Mitsubishi",name:"Pajero Sport",year:2021,type:"diesel",category:"SUV",engine:"2.4L MIVEC Turbo Diesel",transmission:"AT",seats:"7 penumpang",description:"SUV diesel dengan karakter tangguh untuk perjalanan jauh.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=80"},
   {id:12,brand:"Isuzu",name:"MU-X",year:2022,type:"diesel",category:"SUV",engine:"1.9L RZ4E Diesel",transmission:"AT",seats:"7 penumpang",description:"SUV diesel untuk kebutuhan keluarga dan perjalanan antarkota.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=80"},
   {id:13,brand:"Honda",name:"Civic",year:2022,type:"bensin",category:"SEDAN",engine:"1.5L VTEC Turbo",transmission:"CVT",seats:"5 penumpang",description:"Sedan dengan tampilan sporty dan karakter berkendara responsif.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80"},
-  {id:14,brand:"Wuling",name:"Air ev",year:2024,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"Mobil listrik mungil untuk kebutuhan mobilitas dalam kota.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:15,brand:"Hyundai",name:"Ioniq 5",year:2023,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Kendaraan listrik dengan kabin lapang dan desain modern.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:16,brand:"Hyundai",name:"Kona Electric",year:2024,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik kompak untuk penggunaan harian dan perjalanan kota.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:17,brand:"BYD",name:"Atto 3",year:2024,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik dengan kabin modern dan ruang keluarga yang lega.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:18,brand:"BYD",name:"Dolphin",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Hatchback listrik untuk mobilitas urban.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:19,brand:"Hyundai",name:"IONIQ 6",year:2024,type:"listrik",category:"ELECTRIC SEDAN",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Sedan listrik bergaya aerodinamis dengan kabin modern.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:20,brand:"Hyundai",name:"IONIQ 5 N",year:2024,type:"listrik",category:"ELECTRIC PERFORMANCE",engine:"Dual motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Versi performa tinggi dari keluarga IONIQ 5.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:21,brand:"Hyundai",name:"IONIQ 9",year:2026,type:"listrik",category:"ELECTRIC SUV 3 ROW",engine:"Motor listrik",transmission:"Single speed",seats:"6–7 penumpang",description:"SUV listrik besar dengan konfigurasi kabin tiga baris.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:22,brand:"BYD",name:"Seal",year:2024,type:"listrik",category:"ELECTRIC SEDAN",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Sedan listrik dengan karakter sporty dan desain elegan.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:23,brand:"BYD",name:"Sealion 7",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik bergaya coupe untuk kebutuhan keluarga modern.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:24,brand:"BYD",name:"M6",year:2024,type:"listrik",category:"ELECTRIC MPV",engine:"Motor listrik",transmission:"Single speed",seats:"6–7 penumpang",description:"MPV listrik dengan ruang kabin untuk keluarga.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:25,brand:"BYD",name:"Atto 1",year:2026,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Mobil listrik kompak untuk mobilitas harian di perkotaan.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:26,brand:"Wuling",name:"BinguoEV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"Hatchback listrik bergaya retro-modern untuk perkotaan.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:27,brand:"Wuling",name:"Cloud EV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Hatchback listrik dengan kabin lega dan nyaman.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:28,brand:"Wuling",name:"Darion EV",year:2026,type:"listrik",category:"ELECTRIC MPV",engine:"Motor listrik",transmission:"Single speed",seats:"7 penumpang",description:"MPV listrik untuk kebutuhan keluarga dan perjalanan bersama.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:29,brand:"MG",name:"MG 4 EV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Hatchback listrik dengan karakter berkendara sporty.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:30,brand:"MG",name:"S5 EV",year:2026,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik modern untuk aktivitas harian dan keluarga.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:31,brand:"Geely",name:"EX2",year:2026,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Mobil listrik kompak dengan desain urban.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:32,brand:"Geely",name:"EX5",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik dengan ruang kabin praktis untuk keluarga.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:33,brand:"GAC AION",name:"AION V",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik dengan desain futuristis dan kabin lapang.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:34,brand:"GAC AION",name:"AION Y Plus",year:2024,type:"listrik",category:"ELECTRIC MPV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Mobil listrik bergaya MPV dengan ruang kabin lega.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:35,brand:"VinFast",name:"VF 3",year:2025,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"SUV mini listrik untuk mobilitas perkotaan.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:36,brand:"Jaecoo",name:"J5 EV",year:2026,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik bergaya tangguh untuk penggunaan harian.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:37,brand:"XPENG",name:"G6",year:2025,type:"listrik",category:"ELECTRIC SUV COUPE",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik bergaya coupe dengan teknologi kabin modern.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"},
-  {id:38,brand:"Chery",name:"J6",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik berdesain boxy dengan tampilan adventure.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"}
+  {id:14,brand:"Wuling",name:"Air ev",year:2024,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"Mobil listrik mungil untuk kebutuhan mobilitas dalam kota.",price:"Tanya harga",image:"https://wuling.id/assets/images/product/store/new-air-ev-lite.png"},
+  {id:15,brand:"Hyundai",name:"Ioniq 5",year:2023,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Kendaraan listrik dengan kabin lapang dan desain modern.",price:"Tanya harga",image:"https://www.hyundai.com/content/dam/hyundai/id/en/data/marketing/download-image/ioniq5/list-thumbnail/Gallery-1-1-Kolom-pc-%281%29.jpg"},
+  {id:16,brand:"Hyundai",name:"Kona Electric",year:2024,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik kompak untuk penggunaan harian dan perjalanan kota.",price:"Tanya harga",image:"https://www.hyundai.com/content/dam/hyundai/id/en/data/marketing/download-image/all-new-kona-electric/list-thumbnail/all-new-kona-electric-2024.png"},
+  {id:17,brand:"BYD",name:"Atto 3",year:2024,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik dengan kabin modern dan ruang keluarga yang lega.",price:"Tanya harga",image:"https://www.byd.com/material/byd-site/id/home/section-atto3-c.jpg"},
+  {id:18,brand:"BYD",name:"Dolphin",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Hatchback listrik untuk mobilitas urban.",price:"Tanya harga",image:""},
+  {id:19,brand:"Hyundai",name:"IONIQ 6",year:2024,type:"listrik",category:"ELECTRIC SEDAN",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Sedan listrik bergaya aerodinamis dengan kabin modern.",price:"Tanya harga",image:"https://www.hyundai.com/content/dam/hyundai/id/en/data/marketing/download-image/ioniq-6/list-thumbnail/IONIQ-6-320-d.png"},
+  {id:20,brand:"Hyundai",name:"IONIQ 5 N",year:2024,type:"listrik",category:"ELECTRIC PERFORMANCE",engine:"Dual motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Versi performa tinggi dari keluarga IONIQ 5.",price:"Tanya harga",image:""},
+  {id:21,brand:"Hyundai",name:"IONIQ 9",year:2026,type:"listrik",category:"ELECTRIC SUV 3 ROW",engine:"Motor listrik",transmission:"Single speed",seats:"6–7 penumpang",description:"SUV listrik besar dengan konfigurasi kabin tiga baris.",price:"Tanya harga",image:""},
+  {id:22,brand:"BYD",name:"Seal",year:2024,type:"listrik",category:"ELECTRIC SEDAN",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Sedan listrik dengan karakter sporty dan desain elegan.",price:"Tanya harga",image:"https://www.byd.com/material/byd-site/id/home/section-seal.jpg"},
+  {id:23,brand:"BYD",name:"Sealion 7",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik bergaya coupe untuk kebutuhan keluarga modern.",price:"Tanya harga",image:""},
+  {id:24,brand:"BYD",name:"M6",year:2024,type:"listrik",category:"ELECTRIC MPV",engine:"Motor listrik",transmission:"Single speed",seats:"6–7 penumpang",description:"MPV listrik dengan ruang kabin untuk keluarga.",price:"Tanya harga",image:"https://www.byd.com/material/byd-site/id/home/home-m6.jpg"},
+  {id:25,brand:"BYD",name:"Atto 1",year:2026,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Mobil listrik kompak untuk mobilitas harian di perkotaan.",price:"Tanya harga",image:""},
+  {id:26,brand:"Wuling",name:"BinguoEV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"Hatchback listrik bergaya retro-modern untuk perkotaan.",price:"Tanya harga",image:"https://wuling.id/assets/images/binguo-ev/product-color/pro-2026/Avocado-Green.png"},
+  {id:27,brand:"Wuling",name:"Cloud EV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Hatchback listrik dengan kabin lega dan nyaman.",price:"Tanya harga",image:"https://wuling.id/assets/images/cloud-ev/product-color/2025/CLOUD_EV_SE_HIRES_3.png"},
+  {id:28,brand:"Wuling",name:"Darion EV",year:2026,type:"listrik",category:"ELECTRIC MPV",engine:"Motor listrik",transmission:"Single speed",seats:"7 penumpang",description:"MPV listrik untuk kebutuhan keluarga dan perjalanan bersama.",price:"Tanya harga",image:""},
+  {id:29,brand:"MG",name:"MG 4 EV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Hatchback listrik dengan karakter berkendara sporty.",price:"Tanya harga",image:""},
+  {id:30,brand:"MG",name:"S5 EV",year:2026,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik modern untuk aktivitas harian dan keluarga.",price:"Tanya harga",image:""},
+  {id:31,brand:"Geely",name:"EX2",year:2026,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Mobil listrik kompak dengan desain urban.",price:"Tanya harga",image:""},
+  {id:32,brand:"Geely",name:"EX5",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik dengan ruang kabin praktis untuk keluarga.",price:"Tanya harga",image:""},
+  {id:33,brand:"GAC AION",name:"AION V",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik dengan desain futuristis dan kabin lapang.",price:"Tanya harga",image:""},
+  {id:34,brand:"GAC AION",name:"AION Y Plus",year:2024,type:"listrik",category:"ELECTRIC MPV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Mobil listrik bergaya MPV dengan ruang kabin lega.",price:"Tanya harga",image:""},
+  {id:35,brand:"VinFast",name:"VF 3",year:2025,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"SUV mini listrik untuk mobilitas perkotaan.",price:"Tanya harga",image:""},
+  {id:36,brand:"Jaecoo",name:"J5 EV",year:2026,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik bergaya tangguh untuk penggunaan harian.",price:"Tanya harga",image:""},
+  {id:37,brand:"XPENG",name:"G6",year:2025,type:"listrik",category:"ELECTRIC SUV COUPE",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik bergaya coupe dengan teknologi kabin modern.",price:"Tanya harga",image:""},
+  {id:38,brand:"Chery",name:"J6",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik berdesain boxy dengan tampilan adventure.",price:"Tanya harga",image:""}
 ];
 
 const grid = document.querySelector("#carGrid");
@@ -56,6 +56,9 @@ function whatsappLink(car){
     : "Halo Thomy Showroom, saya ingin bertanya tentang pilihan mobil yang tersedia.";
   return `https://wa.me/${CONTACT_WA}?text=${encodeURIComponent(message)}`;
 }
+function photoPlaceholder(car){
+  return `<div class="photo-placeholder"><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>FOTO MODEL MENYUSUL</small></div>`;
+}
 function renderCars(){
   const query = searchInput.value.trim().toLowerCase();
   const filtered = cars.filter(car => {
@@ -68,7 +71,7 @@ function renderCars(){
   grid.innerHTML = filtered.map(car => `
     <article class="car-card">
       <div class="car-image">
-        <img src="${car.image}" alt="${car.brand} ${car.name}" loading="lazy" onerror="this.style.display='none'">
+        ${car.image ? `<img src="${car.image}" alt="${car.brand} ${car.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.hidden=false"><div class="photo-placeholder" hidden><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>FOTO MODEL MENYUSUL</small></div>` : photoPlaceholder(car)}
         <span class="car-type">${car.type.toUpperCase()}</span><span class="car-number">TS—${String(car.id).padStart(3,"0")}</span>
       </div>
       <div class="car-info">
@@ -83,7 +86,7 @@ function openDetail(id){
   if(!car) return;
   dialogContent.innerHTML = `
     <div class="dialog-layout">
-      <img src="${car.image}" alt="${car.brand} ${car.name}">
+      ${car.image ? `<div class="dialog-photo"><img src="${car.image}" alt="${car.brand} ${car.name}" onerror="this.style.display='none';this.nextElementSibling.hidden=false">${photoPlaceholder(car).replace('photo-placeholder','photo-placeholder dialog-photo-placeholder')}</div>` : `<div class="dialog-photo">${photoPlaceholder(car).replace('photo-placeholder','photo-placeholder dialog-photo-placeholder')}</div>`}
       <div class="dialog-copy">
         <p class="eyebrow">${car.brand.toUpperCase()} / ${car.category}</p>
         <h3>${car.name}</h3><p>${car.description}</p>
@@ -113,13 +116,8 @@ grid.addEventListener("click", event => {
 document.querySelector("#dialogClose").addEventListener("click", () => dialog.close());
 dialog.addEventListener("click", event => { if(event.target === dialog) dialog.close(); });
 document.querySelector("#mainWhatsapp").href = whatsappLink();
-document.querySelector("#mainWhatsapp").addEventListener("click", event => {
-  if(CONTACT_WA === "6287886555076"){
-    event.preventDefault();
-    alert("Nomor WhatsApp belum diatur. Ganti CONTACT_WA di bagian atas file script.js dengan nomor resmi Thomy Showroom.");
-  }
-});
-document.querySelector("#contactLabel").textContent = CONTACT_WA === "6287886555076" ? "Nomor WhatsApp menunggu konfirmasi" : `+${CONTACT_WA}`;
+document.querySelector("#contactLabel").textContent = `+${CONTACT_WA}`;
+document.querySelector("#floatingWhatsapp").href = whatsappLink();
 const menuButton = document.querySelector(".menu-toggle");
 menuButton.addEventListener("click", () => {
   const nav = document.querySelector(".desktop-nav");
@@ -131,3 +129,10 @@ document.querySelectorAll(".desktop-nav a").forEach(link => link.addEventListene
   menuButton.setAttribute("aria-expanded","false");
 }));
 renderCars();
+
+// Quick action from the EV spotlight section.
+document.querySelector("[data-show-electric]")?.addEventListener("click", () => {
+  activeFilter = "listrik";
+  document.querySelectorAll(".filter-btn").forEach(button => button.classList.toggle("active", button.dataset.filter === "listrik"));
+  renderCars();
+});

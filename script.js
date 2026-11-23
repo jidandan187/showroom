@@ -1,6 +1,6 @@
 // Ganti nomor ini dengan nomor WhatsApp resmi Thomy Showroom.
 // Format internasional tanpa tanda +, spasi, atau strip. Contoh: 6281234567890
-const CONTACT_WA = "6280000000000";
+const CONTACT_WA = "6287886555076";
 const cars = [
   {id:1,brand:"Honda",name:"Brio Satya",year:2023,type:"bensin",category:"CITY CAR",engine:"1.2L i-VTEC",transmission:"Manual / CVT",seats:"5 penumpang",description:"Ringkas untuk mobilitas harian dan jalanan perkotaan.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80"},
   {id:2,brand:"Toyota",name:"Agya",year:2023,type:"bensin",category:"CITY CAR",engine:"1.2L",transmission:"Manual / CVT",seats:"5 penumpang",description:"City car praktis untuk aktivitas sehari-hari.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=80"},
@@ -114,7 +114,7 @@ document.querySelector("#dialogClose").addEventListener("click", () => dialog.cl
 dialog.addEventListener("click", event => { if(event.target === dialog) dialog.close(); });
 document.querySelector("#mainWhatsapp").href = whatsappLink();
 document.querySelector("#mainWhatsapp").addEventListener("click", event => {
-  if(CONTACT_WA === "6287886555076"){
+  if(CONTACT_WA === "6280000000"){
     event.preventDefault();
     alert("Nomor WhatsApp belum diatur. Ganti CONTACT_WA di bagian atas file script.js dengan nomor resmi Thomy Showroom.");
   }

@@ -77,3 +77,5 @@
  .ev-count strong{font-size:66px}
  .whatsapp-float{right:14px;bottom:14px;padding:12px 14px;font-size:9px}
 }
+
+.contact-number{font-size:13px;font-weight:800;color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;display:inline-flex;align-items:center;gap:6px;transition:color .18s}.contact-number:hover{color:#168b48}

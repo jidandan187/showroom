@@ -116,7 +116,8 @@ grid.addEventListener("click", event => {
 document.querySelector("#dialogClose").addEventListener("click", () => dialog.close());
 dialog.addEventListener("click", event => { if(event.target === dialog) dialog.close(); });
 document.querySelector("#mainWhatsapp").href = whatsappLink();
-document.querySelector("#contactLabel").textContent = `+${CONTACT_WA}`;
+document.querySelector("#contactLabel").textContent = `+62 ${CONTACT_WA.slice(2,5)}-${CONTACT_WA.slice(5,9)}-${CONTACT_WA.slice(9)} ↗`;
+document.querySelector("#contactLabel").href = whatsappLink();
 document.querySelector("#floatingWhatsapp").href = whatsappLink();
 const menuButton = document.querySelector(".menu-toggle");
 menuButton.addEventListener("click", () => {

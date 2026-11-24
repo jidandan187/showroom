@@ -1780,7 +1780,7 @@ fillBrands();
 // ===== v14: status unit, booking, form layanan, data Google Sheet, link per mobil =====
 // Isi dengan link CSV Google Sheet yang sudah "Publish to web" (lihat README / data-unit-template.csv).
 // Kosongkan untuk memakai data bawaan.
-const SHEET_CSV_URL = "";
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvisrbseZM4DF_qLts_PhRpK152Pe9pHuy_mP7ObFks2-1JuvFOI7J23mcDIUFJJlVwlOAIZUD9nlK/pub?output=csv";
 const STATUS_LABEL = {ready:"READY", indent:"INDENT", sold:"TERJUAL", cari:"BISA DICARIKAN"};
 const normStatus = v => { v = String(v || "").trim().toLowerCase(); return STATUS_LABEL[v] ? v : "cari"; };
 cars.forEach(car => { car.status = normStatus(car.status); car.kondisi = car.kondisi || ""; car.photos = car.photos || []; });

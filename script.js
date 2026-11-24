@@ -2,33 +2,33 @@
 // Format internasional tanpa tanda +, spasi, atau strip. Contoh: 6281234567890
 const CONTACT_WA = "6287886555076";
 const cars = [
-  {id:1,brand:"Honda",name:"Brio Satya",year:2023,type:"bensin",category:"CITY CAR",engine:"1.2L i-VTEC",transmission:"Manual / CVT",seats:"5 penumpang",description:"Ringkas untuk mobilitas harian dan jalanan perkotaan.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80"},
-  {id:2,brand:"Toyota",name:"Agya",year:2023,type:"bensin",category:"CITY CAR",engine:"1.2L",transmission:"Manual / CVT",seats:"5 penumpang",description:"City car praktis untuk aktivitas sehari-hari.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=80"},
-  {id:3,brand:"Daihatsu",name:"Ayla",year:2023,type:"bensin",category:"CITY CAR",engine:"1.0L / 1.2L",transmission:"Manual / CVT",seats:"5 penumpang",description:"Pilihan kompak untuk penggunaan di dalam kota.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1000&q=80"},
-  {id:4,brand:"Toyota",name:"Avanza",year:2022,type:"bensin",category:"FAMILY CAR",engine:"1.3L / 1.5L",transmission:"Manual / CVT",seats:"7 penumpang",description:"Pilihan keluarga yang praktis untuk aktivitas sehari-hari.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80"},
-  {id:5,brand:"Mitsubishi",name:"Xpander",year:2022,type:"bensin",category:"FAMILY CAR",engine:"1.5L MIVEC",transmission:"Manual / AT",seats:"7 penumpang",description:"Kabin lega dengan karakter MPV yang nyaman untuk keluarga.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1000&q=80"},
-  {id:6,brand:"Suzuki",name:"Ertiga",year:2022,type:"bensin",category:"MPV",engine:"1.5L K15B",transmission:"Manual / AT",seats:"7 penumpang",description:"MPV keluarga yang efisien dan mudah digunakan.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=80"},
-  {id:7,brand:"Toyota",name:"Innova Zenix",year:2023,type:"hybrid",category:"MPV HYBRID",engine:"2.0L Hybrid",transmission:"CVT",seats:"7 penumpang",description:"MPV modern dengan pilihan teknologi hybrid.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80"},
-  {id:8,brand:"Toyota",name:"Rush",year:2022,type:"bensin",category:"SUV",engine:"1.5L Dual VVT-i",transmission:"Manual / AT",seats:"7 penumpang",description:"SUV kompak untuk kebutuhan keluarga dan perjalanan luar kota.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=80"},
-  {id:9,brand:"Honda",name:"HR-V",year:2023,type:"bensin",category:"COMPACT SUV",engine:"1.5L i-VTEC",transmission:"CVT",seats:"5 penumpang",description:"SUV kompak dengan desain modern dan penggunaan fleksibel.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1511391409280-3f7e9b7c4f3b?auto=format&fit=crop&w=1000&q=80"},
-  {id:10,brand:"Toyota",name:"Fortuner",year:2021,type:"diesel",category:"SUV",engine:"2.4L / 2.8L Diesel",transmission:"AT",seats:"7 penumpang",description:"SUV ladder-frame untuk perjalanan jauh dan beragam kondisi jalan.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=80"},
-  {id:11,brand:"Mitsubishi",name:"Pajero Sport",year:2021,type:"diesel",category:"SUV",engine:"2.4L MIVEC Turbo Diesel",transmission:"AT",seats:"7 penumpang",description:"SUV diesel dengan karakter tangguh untuk perjalanan jauh.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=80"},
-  {id:12,brand:"Isuzu",name:"MU-X",year:2022,type:"diesel",category:"SUV",engine:"1.9L RZ4E Diesel",transmission:"AT",seats:"7 penumpang",description:"SUV diesel untuk kebutuhan keluarga dan perjalanan antarkota.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=80"},
-  {id:13,brand:"Honda",name:"Civic",year:2022,type:"bensin",category:"SEDAN",engine:"1.5L VTEC Turbo",transmission:"CVT",seats:"5 penumpang",description:"Sedan dengan tampilan sporty dan karakter berkendara responsif.",price:"Tanya harga",image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80"},
-  {id:14,brand:"Wuling",name:"Air ev",year:2024,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"Mobil listrik mungil untuk kebutuhan mobilitas dalam kota.",price:"Tanya harga",image:"https://wuling.id/assets/images/product/store/new-air-ev-lite.png"},
+  {id:1,brand:"Honda",name:"Brio Satya",year:2023,type:"bensin",category:"CITY CAR",engine:"1.2L i-VTEC",transmission:"Manual / CVT",seats:"5 penumpang",description:"Ringkas untuk mobilitas harian dan jalanan perkotaan.",price:"Tanya harga",image:""},
+  {id:2,brand:"Toyota",name:"Agya",year:2023,type:"bensin",category:"CITY CAR",engine:"1.2L",transmission:"Manual / CVT",seats:"5 penumpang",description:"City car praktis untuk aktivitas sehari-hari.",price:"Tanya harga",image:""},
+  {id:3,brand:"Daihatsu",name:"Ayla",year:2023,type:"bensin",category:"CITY CAR",engine:"1.0L / 1.2L",transmission:"Manual / CVT",seats:"5 penumpang",description:"Pilihan kompak untuk penggunaan di dalam kota.",price:"Tanya harga",image:""},
+  {id:4,brand:"Toyota",name:"Avanza",year:2022,type:"bensin",category:"FAMILY CAR",engine:"1.3L / 1.5L",transmission:"Manual / CVT",seats:"7 penumpang",description:"Pilihan keluarga yang praktis untuk aktivitas sehari-hari.",price:"Tanya harga",image:""},
+  {id:5,brand:"Mitsubishi",name:"Xpander",year:2022,type:"bensin",category:"FAMILY CAR",engine:"1.5L MIVEC",transmission:"Manual / AT",seats:"7 penumpang",description:"Kabin lega dengan karakter MPV yang nyaman untuk keluarga.",price:"Tanya harga",image:""},
+  {id:6,brand:"Suzuki",name:"Ertiga",year:2022,type:"bensin",category:"MPV",engine:"1.5L K15B",transmission:"Manual / AT",seats:"7 penumpang",description:"MPV keluarga yang efisien dan mudah digunakan.",price:"Tanya harga",image:""},
+  {id:7,brand:"Toyota",name:"Innova Zenix",year:2023,type:"hybrid",category:"MPV HYBRID",engine:"2.0L Hybrid",transmission:"CVT",seats:"7 penumpang",description:"MPV modern dengan pilihan teknologi hybrid.",price:"Tanya harga",image:""},
+  {id:8,brand:"Toyota",name:"Rush",year:2022,type:"bensin",category:"SUV",engine:"1.5L Dual VVT-i",transmission:"Manual / AT",seats:"7 penumpang",description:"SUV kompak untuk kebutuhan keluarga dan perjalanan luar kota.",price:"Tanya harga",image:""},
+  {id:9,brand:"Honda",name:"HR-V",year:2023,type:"bensin",category:"COMPACT SUV",engine:"1.5L i-VTEC",transmission:"CVT",seats:"5 penumpang",description:"SUV kompak dengan desain modern dan penggunaan fleksibel.",price:"Tanya harga",image:""},
+  {id:10,brand:"Toyota",name:"Fortuner",year:2021,type:"diesel",category:"SUV",engine:"2.4L / 2.8L Diesel",transmission:"AT",seats:"7 penumpang",description:"SUV ladder-frame untuk perjalanan jauh dan beragam kondisi jalan.",price:"Tanya harga",image:""},
+  {id:11,brand:"Mitsubishi",name:"Pajero Sport",year:2021,type:"diesel",category:"SUV",engine:"2.4L MIVEC Turbo Diesel",transmission:"AT",seats:"7 penumpang",description:"SUV diesel dengan karakter tangguh untuk perjalanan jauh.",price:"Tanya harga",image:""},
+  {id:12,brand:"Isuzu",name:"MU-X",year:2022,type:"diesel",category:"SUV",engine:"1.9L RZ4E Diesel",transmission:"AT",seats:"7 penumpang",description:"SUV diesel untuk kebutuhan keluarga dan perjalanan antarkota.",price:"Tanya harga",image:""},
+  {id:13,brand:"Honda",name:"Civic",year:2022,type:"bensin",category:"SEDAN",engine:"1.5L VTEC Turbo",transmission:"CVT",seats:"5 penumpang",description:"Sedan dengan tampilan sporty dan karakter berkendara responsif.",price:"Tanya harga",image:""},
+  {id:14,brand:"Wuling",name:"Air ev",year:2024,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"Mobil listrik mungil untuk kebutuhan mobilitas dalam kota.",price:"Tanya harga",image:""},
   {id:15,brand:"Hyundai",name:"Ioniq 5",year:2023,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Kendaraan listrik dengan kabin lapang dan desain modern.",price:"Tanya harga",image:"https://www.hyundai.com/content/dam/hyundai/id/en/data/marketing/download-image/ioniq5/list-thumbnail/Gallery-1-1-Kolom-pc-%281%29.jpg"},
   {id:16,brand:"Hyundai",name:"Kona Electric",year:2024,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik kompak untuk penggunaan harian dan perjalanan kota.",price:"Tanya harga",image:"https://www.hyundai.com/content/dam/hyundai/id/en/data/marketing/download-image/all-new-kona-electric/list-thumbnail/all-new-kona-electric-2024.png"},
-  {id:17,brand:"BYD",name:"Atto 3",year:2024,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik dengan kabin modern dan ruang keluarga yang lega.",price:"Tanya harga",image:"https://www.byd.com/material/byd-site/id/home/section-atto3-c.jpg"},
+  {id:17,brand:"BYD",name:"Atto 3",year:2024,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik dengan kabin modern dan ruang keluarga yang lega.",price:"Tanya harga",image:""},
   {id:18,brand:"BYD",name:"Dolphin",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Hatchback listrik untuk mobilitas urban.",price:"Tanya harga",image:""},
-  {id:19,brand:"Hyundai",name:"IONIQ 6",year:2024,type:"listrik",category:"ELECTRIC SEDAN",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Sedan listrik bergaya aerodinamis dengan kabin modern.",price:"Tanya harga",image:"https://www.hyundai.com/content/dam/hyundai/id/en/data/marketing/download-image/ioniq-6/list-thumbnail/IONIQ-6-320-d.png"},
+  {id:19,brand:"Hyundai",name:"IONIQ 6",year:2024,type:"listrik",category:"ELECTRIC SEDAN",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Sedan listrik bergaya aerodinamis dengan kabin modern.",price:"Tanya harga",image:""},
   {id:20,brand:"Hyundai",name:"IONIQ 5 N",year:2024,type:"listrik",category:"ELECTRIC PERFORMANCE",engine:"Dual motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Versi performa tinggi dari keluarga IONIQ 5.",price:"Tanya harga",image:""},
   {id:21,brand:"Hyundai",name:"IONIQ 9",year:2026,type:"listrik",category:"ELECTRIC SUV 3 ROW",engine:"Motor listrik",transmission:"Single speed",seats:"6–7 penumpang",description:"SUV listrik besar dengan konfigurasi kabin tiga baris.",price:"Tanya harga",image:""},
-  {id:22,brand:"BYD",name:"Seal",year:2024,type:"listrik",category:"ELECTRIC SEDAN",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Sedan listrik dengan karakter sporty dan desain elegan.",price:"Tanya harga",image:"https://www.byd.com/material/byd-site/id/home/section-seal.jpg"},
+  {id:22,brand:"BYD",name:"Seal",year:2024,type:"listrik",category:"ELECTRIC SEDAN",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Sedan listrik dengan karakter sporty dan desain elegan.",price:"Tanya harga",image:""},
   {id:23,brand:"BYD",name:"Sealion 7",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik bergaya coupe untuk kebutuhan keluarga modern.",price:"Tanya harga",image:""},
-  {id:24,brand:"BYD",name:"M6",year:2024,type:"listrik",category:"ELECTRIC MPV",engine:"Motor listrik",transmission:"Single speed",seats:"6–7 penumpang",description:"MPV listrik dengan ruang kabin untuk keluarga.",price:"Tanya harga",image:"https://www.byd.com/material/byd-site/id/home/home-m6.jpg"},
+  {id:24,brand:"BYD",name:"M6",year:2024,type:"listrik",category:"ELECTRIC MPV",engine:"Motor listrik",transmission:"Single speed",seats:"6–7 penumpang",description:"MPV listrik dengan ruang kabin untuk keluarga.",price:"Tanya harga",image:""},
   {id:25,brand:"BYD",name:"Atto 1",year:2026,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Mobil listrik kompak untuk mobilitas harian di perkotaan.",price:"Tanya harga",image:""},
-  {id:26,brand:"Wuling",name:"BinguoEV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"Hatchback listrik bergaya retro-modern untuk perkotaan.",price:"Tanya harga",image:"https://wuling.id/assets/images/binguo-ev/product-color/pro-2026/Avocado-Green.png"},
-  {id:27,brand:"Wuling",name:"Cloud EV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Hatchback listrik dengan kabin lega dan nyaman.",price:"Tanya harga",image:"https://wuling.id/assets/images/cloud-ev/product-color/2025/CLOUD_EV_SE_HIRES_3.png"},
+  {id:26,brand:"Wuling",name:"BinguoEV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"Hatchback listrik bergaya retro-modern untuk perkotaan.",price:"Tanya harga",image:""},
+  {id:27,brand:"Wuling",name:"Cloud EV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Hatchback listrik dengan kabin lega dan nyaman.",price:"Tanya harga",image:""},
   {id:28,brand:"Wuling",name:"Darion EV",year:2026,type:"listrik",category:"ELECTRIC MPV",engine:"Motor listrik",transmission:"Single speed",seats:"7 penumpang",description:"MPV listrik untuk kebutuhan keluarga dan perjalanan bersama.",price:"Tanya harga",image:""},
   {id:29,brand:"MG",name:"MG 4 EV",year:2024,type:"listrik",category:"ELECTRIC HATCHBACK",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"Hatchback listrik dengan karakter berkendara sporty.",price:"Tanya harga",image:""},
   {id:30,brand:"MG",name:"S5 EV",year:2026,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik modern untuk aktivitas harian dan keluarga.",price:"Tanya harga",image:""},
@@ -39,17 +39,175 @@ const cars = [
   {id:35,brand:"VinFast",name:"VF 3",year:2025,type:"listrik",category:"ELECTRIC CITY CAR",engine:"Motor listrik",transmission:"Single speed",seats:"4 penumpang",description:"SUV mini listrik untuk mobilitas perkotaan.",price:"Tanya harga",image:""},
   {id:36,brand:"Jaecoo",name:"J5 EV",year:2026,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik bergaya tangguh untuk penggunaan harian.",price:"Tanya harga",image:""},
   {id:37,brand:"XPENG",name:"G6",year:2025,type:"listrik",category:"ELECTRIC SUV COUPE",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik bergaya coupe dengan teknologi kabin modern.",price:"Tanya harga",image:""},
-  {id:38,brand:"Chery",name:"J6",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik berdesain boxy dengan tampilan adventure.",price:"Tanya harga",image:""}
+  {id:38,brand:"Chery",name:"J6",year:2025,type:"listrik",category:"ELECTRIC SUV",engine:"Motor listrik",transmission:"Single speed",seats:"5 penumpang",description:"SUV listrik berdesain boxy dengan tampilan adventure.",price:"Tanya harga",image:""},
+  {id:39,brand:"Toyota",name:"Kijang Innova Reborn",year:2022,type:"diesel",category:"MPV DIESEL",engine:"2.4L Diesel",transmission:"Manual / AT",seats:"7 penumpang",description:"MPV diesel tangguh yang jadi andalan keluarga dan perjalanan jauh.",price:"Tanya harga",image:""},
+  {id:40,brand:"Toyota",name:"Calya",year:2023,type:"bensin",category:"LCGC MPV",engine:"1.2L Dual VVT-i",transmission:"Manual / AT",seats:"7 penumpang",description:"MPV LCGC hemat untuk keluarga dengan budget terjangkau.",price:"Tanya harga",image:""},
+  {id:41,brand:"Toyota",name:"Veloz Hybrid",year:2024,type:"hybrid",category:"MPV HYBRID",engine:"1.5L Hybrid",transmission:"CVT",seats:"7 penumpang",description:"MPV modern berteknologi hybrid yang irit untuk pemakaian harian.",price:"Tanya harga",image:""},
+  {id:42,brand:"Toyota",name:"Hilux",year:2023,type:"diesel",category:"PICK UP",engine:"2.4L Turbo Diesel",transmission:"Manual / AT",seats:"2–5 penumpang",description:"Pick up diesel tangguh untuk usaha dan medan berat.",price:"Tanya harga",image:""},
+  {id:43,brand:"Toyota",name:"Raize",year:2023,type:"bensin",category:"COMPACT SUV",engine:"1.2L / 1.0L Turbo",transmission:"CVT / D-CVT",seats:"5 penumpang",description:"SUV kompak lincah dengan tampilan sporty untuk kota.",price:"Tanya harga",image:""},
+  {id:44,brand:"Daihatsu",name:"Gran Max",year:2023,type:"bensin",category:"NIAGA",engine:"1.5L",transmission:"Manual",seats:"2–7 penumpang",description:"Kendaraan niaga ringan serbaguna: pick up, blind van, dan minibus.",price:"Tanya harga",image:""},
+  {id:45,brand:"Daihatsu",name:"Sigra",year:2023,type:"bensin",category:"LCGC MPV",engine:"1.0L / 1.2L",transmission:"Manual / AT",seats:"7 penumpang",description:"LCGC 7 penumpang yang praktis dan ekonomis.",price:"Tanya harga",image:""},
+  {id:46,brand:"Daihatsu",name:"Terios",year:2023,type:"bensin",category:"SUV",engine:"1.5L",transmission:"Manual / AT",seats:"7 penumpang",description:"SUV 7 penumpang dengan ground clearance tinggi.",price:"Tanya harga",image:""},
+  {id:47,brand:"Suzuki",name:"Carry Pick Up",year:2023,type:"bensin",category:"PICK UP",engine:"1.5L",transmission:"Manual",seats:"2 penumpang",description:"Pick up ringan andalan UMKM dengan bak lega.",price:"Tanya harga",image:""},
+  {id:48,brand:"Suzuki",name:"Fronx",year:2024,type:"bensin",category:"CROSSOVER",engine:"1.5L",transmission:"Manual / AT",seats:"5 penumpang",description:"Crossover gaya coupe dengan fitur modern.",price:"Tanya harga",image:""},
+  {id:49,brand:"Mitsubishi",name:"Destinator",year:2025,type:"bensin",category:"SUV 3 ROW",engine:"1.5L Turbo",transmission:"CVT",seats:"7 penumpang",description:"SUV 7 penumpang terbaru dengan mesin turbo.",price:"Tanya harga",image:""},
+  {id:50,brand:"Honda",name:"WR-V",year:2023,type:"bensin",category:"COMPACT SUV",engine:"1.5L i-VTEC",transmission:"CVT",seats:"5 penumpang",description:"SUV kompak Honda dengan kabin lega dan fitur lengkap.",price:"Tanya harga",image:""},
+  {id:51,brand:"Hyundai",name:"Stargazer",year:2023,type:"bensin",category:"MPV",engine:"1.5L",transmission:"IVT",seats:"7 penumpang",description:"MPV keluarga bergaya modern dengan kabin lapang.",price:"Tanya harga",image:""}
 ];
 
-// Semua foto kendaraan menggunakan URL online; tidak membutuhkan folder asset lokal.
-// Model yang belum memiliki URL foto tetap mendapat gambar online berdasarkan nama mobil.
-cars.forEach(car => {
-  if (!car.image) {
-    const tags = `${car.brand}-${car.name}-car`.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
-    car.image = `https://loremflickr.com/1000/700/${tags}?lock=${car.id}`;
-  }
-});
+
+// ===== Foto mobil online (tanpa folder assets) =====
+// Foto dicari otomatis dari Wikimedia Commons berdasarkan nama mobil, lalu cadangan Wikipedia.
+// Hasil disimpan di localStorage agar tidak mencari ulang. Jika tidak ketemu, tampil placeholder bernama.
+// Format hint: [kata pencarian, [kata wajib di judul file], [kata terlarang], [kata prioritas]]
+const imageHints = {
+  1:[["Honda Brio Satya",["brio"]],["Honda Brio",["brio"]]],
+  2:[["Toyota Agya",["agya"]],["Toyota Agya",["agya"]]],
+  3:[["Daihatsu Ayla",["ayla"]]],
+  4:[["Toyota Avanza 2022",["avanza"],["xenia"]],["Toyota Avanza",["avanza"],["xenia"]]],
+  5:[["Mitsubishi Xpander",["xpander"]]],
+  6:[["Suzuki Ertiga",["ertiga"]]],
+  7:[["Toyota Kijang Innova Zenix",["zenix"]],["Toyota Innova HyCross",["hycross"]]],
+  8:[["Toyota Rush",["rush"]]],
+  9:[["Honda HR-V",["hrv"]]],
+  10:[["Toyota Fortuner",["fortuner"]]],
+  11:[["Mitsubishi Pajero Sport",["pajerosport"]]],
+  12:[["Isuzu MU-X",["mux"]]],
+  13:[["Honda Civic 2022",["civic"],["typer"]],["Honda Civic",["civic"],["typer"]]],
+  14:[["Wuling Air ev",["airev"]],["Wuling Air EV",["wulingair"]]],
+  17:[["BYD Atto 3",["atto3"]],["BYD Yuan Plus",["yuanplus"]]],
+  18:[["BYD Dolphin",["dolphin"],["mini","surf"]]],
+  19:[["Hyundai Ioniq 6",["ioniq6"]]],
+  20:[["Hyundai Ioniq 5 N",["ioniq5n"]]],
+  21:[["Hyundai Ioniq 9",["ioniq9"]]],
+  22:[["BYD Seal",["seal"],["sealion","sealu","seal06","sealdm"]]],
+  23:[["BYD Sealion 7",["sealion7"]],["BYD Sea Lion 07",["sealion07"]]],
+  24:[["BYD M6",["bydm6"]],["BYD e6",["bydm6"]]],
+  25:[["BYD Atto 1",["atto1"]],["BYD Seagull",["seagull"]]],
+  26:[["Wuling Binguo EV",["binguo"]]],
+  27:[["Wuling Cloud EV",["wulingcloud"]]],
+  28:[["Wuling Darion EV",["darion"]]],
+  29:[["MG4 EV",["mg4"]],["MG 4 Electric",["mg4"]]],
+  30:[["MG S5 EV",["mgs5"]],["MG ES5",["mges5"]]],
+  31:[["Geely EX2",["geelyex2"]],["Geely Xingyuan",["xingyuan"]]],
+  32:[["Geely EX5",["geelyex5"]],["Geely Galaxy E5",["galaxye5"]]],
+  33:[["GAC Aion V",["aionv"]]],
+  34:[["GAC Aion Y Plus",["aiony"]]],
+  35:[["VinFast VF 3",["vf3"]]],
+  36:[["Jaecoo J5 EV",["jaecooj5"]],["Chery iCar 03",["icar03"]]],
+  37:[["XPENG G6",["xpengg6"]]],
+  38:[["Chery J6",["cheryj6"]],["Chery iCar V23",["icarv23"]]],
+  39:[["Toyota Kijang Innova Reborn",["innova"],["zenix","hycross"],["reborn","2016","2017","2018","2019","2020"]]],
+  40:[["Toyota Calya",["calya"]]],
+  41:[["Toyota Veloz Hybrid",["veloz"],[],["hybrid","hev"]],["Toyota Veloz",["veloz"]]],
+  42:[["Toyota Hilux 2022",["hilux"]],["Toyota Hilux",["hilux"]]],
+  43:[["Toyota Raize",["raize"]]],
+  44:[["Daihatsu Gran Max",["granmax"]]],
+  45:[["Daihatsu Sigra",["sigra"]]],
+  46:[["Daihatsu Terios",["terios"]]],
+  47:[["Suzuki Carry pick up",["carry"]],["Suzuki Carry",["carry"]]],
+  48:[["Suzuki Fronx",["fronx"]]],
+  49:[["Mitsubishi Destinator",["destinator"]]],
+  50:[["Honda WR-V",["wrv"]]],
+  51:[["Hyundai Stargazer",["stargazer"]]]
+};
+const WIKI_WORDS_BLOCK = /interior|engine|dashboard|steering|seats?\b|wheel|logo|emblem|badge|headlight|taillight|tail light|cockpit|console|trunk|boot\b|display|brochure|poster|diagram|drawing|police|taxi|ambulance|crash|accident|wreck|cutaway|chassis|undercarriage|gearbox|key\b|model car|toy|lego/i;
+const compact = text => String(text).toLowerCase().replace(/[^a-z0-9]/g, "");
+const IMG_CACHE = "thomy-img-v1:";
+const imagePromises = {};
+
+function readCache(id){
+  try{
+    const raw = localStorage.getItem(IMG_CACHE + id);
+    if(!raw) return null;
+    const item = JSON.parse(raw);
+    if(item.url) return item;
+    if(Date.now() - item.t < 6 * 3600 * 1000) return item; // gagal: coba lagi setelah 6 jam
+  }catch(e){}
+  return null;
+}
+function writeCache(id, url){
+  try{ localStorage.setItem(IMG_CACHE + id, JSON.stringify({url: url || "", t: Date.now()})); }catch(e){}
+}
+async function searchCommons(query, must = [], not = [], prefer = []){
+  const url = "https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=20"
+    + "&gsrsearch=" + encodeURIComponent(query + " filetype:bitmap")
+    + "&prop=imageinfo&iiprop=url|mime&iiurlwidth=900";
+  const res = await fetch(url);
+  if(!res.ok) return "";
+  const data = await res.json();
+  const pages = Object.values((data.query && data.query.pages) || {});
+  let best = null, bestScore = -1e9;
+  pages.forEach(page => {
+    const info = page.imageinfo && page.imageinfo[0];
+    if(!info || !/^image\/(jpeg|png)$/.test(info.mime)) return;
+    const title = page.title.replace(/^File:/i, "");
+    const flat = compact(title);
+    if(WIKI_WORDS_BLOCK.test(title)) return;
+    if(!must.every(word => flat.includes(word))) return;
+    if(not.some(word => flat.includes(word))) return;
+    let score = -(page.index || 0);
+    if(/202[1-6]/.test(title)) score += 4;
+    prefer.forEach(word => { if(flat.includes(word)) score += 6; });
+    if(/front|side|exterior|three|quarter/i.test(title)) score += 1;
+    if(score > bestScore){ bestScore = score; best = info.thumburl || info.url; }
+  });
+  return best || "";
+}
+async function searchWikipedia(title){
+  const res = await fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(title.replace(/\s+/g, "_")) + "?redirect=true");
+  if(!res.ok) return "";
+  const data = await res.json();
+  const src = (data.thumbnail && data.thumbnail.source) || (data.originalimage && data.originalimage.source) || "";
+  return src ? src.replace(/\/\d+px-/, "/900px-") : "";
+}
+function resolveCarImage(car, skipDirect){
+  const key = car.id + (skipDirect ? ":nd" : "");
+  if(imagePromises[key]) return imagePromises[key];
+  imagePromises[key] = (async () => {
+    if(car.image && !skipDirect) return car.image;
+    const cached = readCache(car.id);
+    if(cached) return cached.url;
+    let found = "";
+    for(const [query, must = [], not = [], prefer = []] of (imageHints[car.id] || [[`${car.brand} ${car.name}`, [compact(car.name)]]])){
+      try{ found = await searchCommons(query, must, not, prefer); }catch(e){}
+      if(found) break;
+    }
+    if(!found){
+      try{ found = await searchWikipedia(`${car.brand} ${car.name}`); }catch(e){}
+    }
+    writeCache(car.id, found);
+    return found;
+  })();
+  return imagePromises[key];
+}
+function hydratePhotos(root){
+  root.querySelectorAll("img.car-photo").forEach(img => {
+    const car = cars.find(item => item.id === Number(img.dataset.car));
+    if(!car) return;
+    const holder = img.parentElement;
+    const placeholder = holder.querySelector(".photo-placeholder");
+    const small = placeholder && placeholder.querySelector("small");
+    const fail = () => { img.hidden = true; if(placeholder) placeholder.hidden = false; if(small) small.textContent = "FOTO MODEL MENYUSUL"; };
+    const show = url => {
+      if(!url){ fail(); return; }
+      img.onload = () => { img.hidden = false; if(placeholder) placeholder.hidden = true; };
+      img.onerror = () => {
+        if(img.dataset.retried) return fail();
+        img.dataset.retried = "1";
+        resolveCarImage(car, true).then(next => next && next !== url ? show(next) : fail());
+      };
+      img.src = url;
+    };
+    if(small) small.textContent = "MEMUAT FOTO…";
+    resolveCarImage(car).then(show);
+  });
+}
+
+// Urutan tampil: model terlaris di Indonesia 2026 (data Gaikindo, wholesales) lebih dulu.
+const HOT_IDS = [39,7,44,4,40,47,36,41,45,8,25,24,31,1,5,46,49,2,42,48];
+cars.forEach(car => { const rank = HOT_IDS.indexOf(car.id); car.hot = rank >= 0; car.rank = rank >= 0 ? rank : 1000 + car.id; });
+cars.sort((a, b) => a.rank - b.rank);
 
 // Deskripsi detail unik untuk halaman informasi setiap model.
 const detailDescriptions = {
@@ -90,7 +248,20 @@ const detailDescriptions = {
   "35": "VinFast VF 3 merupakan kendaraan listrik mungil dengan desain kotak bergaya SUV mini. Kabin empat penumpang dan dimensi ringkas membuatnya cocok untuk mobilitas perkotaan.",
   "36": "Jaecoo J5 EV adalah SUV listrik dengan desain tegas dan nuansa adventure. Kabin lima penumpang menjadikannya alternatif bagi pengguna yang menyukai tampilan SUV namun ingin beralih ke tenaga listrik.",
   "37": "XPENG G6 merupakan SUV listrik bergaya coupe dengan desain modern. Kabin lima penumpang dan bentuk bodi aerodinamis memberi karakter berbeda di antara pilihan SUV listrik.",
-  "38": "Chery J6 mengusung desain SUV boxy dengan nuansa adventure. Penggerak listrik dan kabin lima penumpang menjadikannya opsi bagi pencari EV dengan tampilan tegas dan tidak biasa."
+  "38": "Chery J6 mengusung desain SUV boxy dengan nuansa adventure. Penggerak listrik dan kabin lima penumpang menjadikannya opsi bagi pencari EV dengan tampilan tegas dan tidak biasa.",
+  "39": "Toyota Kijang Innova Reborn adalah MPV tujuh penumpang berpenggerak roda belakang dengan pilihan mesin diesel. Kenyamanan kabin dan ketangguhannya menjadikannya andalan keluarga serta kebutuhan perjalanan antarkota.",
+  "40": "Toyota Calya merupakan MPV LCGC tujuh penumpang yang mengutamakan efisiensi dan harga terjangkau. Cocok untuk keluarga yang membutuhkan kabin luas untuk penggunaan harian.",
+  "41": "Toyota Veloz Hybrid memadukan format MPV tujuh penumpang dengan sistem hybrid. Pilihan bagi keluarga yang ingin konsumsi bahan bakar lebih efisien tanpa meninggalkan kepraktisan MPV.",
+  "42": "Toyota Hilux adalah pick up bertenaga diesel dengan karakter tangguh. Banyak dipakai untuk usaha, proyek, dan medan berat, tersedia dalam konfigurasi kabin tunggal maupun ganda.",
+  "43": "Toyota Raize merupakan SUV kompak dengan dimensi ringkas dan tampilan sporty. Pilihan mesin 1.2L atau 1.0L turbo menjadikannya fleksibel untuk penggunaan kota.",
+  "44": "Daihatsu Gran Max adalah kendaraan niaga ringan serbaguna yang tersedia sebagai pick up, blind van, dan minibus. Dikenal tangguh dan mudah dirawat untuk kebutuhan usaha.",
+  "45": "Daihatsu Sigra adalah LCGC tujuh penumpang yang ekonomis. Ukurannya ringkas namun kabinnya cukup untuk keluarga, dengan pilihan mesin 1.0L atau 1.2L.",
+  "46": "Daihatsu Terios menawarkan SUV tujuh penumpang dengan ground clearance tinggi dan penggerak roda belakang. Cocok untuk keluarga yang kerap melewati jalan kurang mulus.",
+  "47": "Suzuki Carry Pick Up adalah pick up ringan yang populer untuk UMKM dan distribusi barang. Bak lega dan perawatan mudah membuatnya andalan untuk usaha.",
+  "48": "Suzuki Fronx adalah crossover bergaya coupe dengan desain modern dan fitur kenyamanan lengkap. Cocok untuk pengguna yang mencari tampilan berbeda dari SUV kompak biasa.",
+  "49": "Mitsubishi Destinator adalah SUV tujuh penumpang terbaru dengan mesin turbo. Ditujukan bagi keluarga yang butuh ruang tiga baris dengan tampilan SUV modern.",
+  "50": "Honda WR-V merupakan SUV kompak dengan mesin 1.5L i-VTEC dan transmisi CVT. Kabinnya lega untuk kelasnya dan cocok untuk penggunaan harian.",
+  "51": "Hyundai Stargazer adalah MPV tujuh penumpang dengan desain futuristis dan kabin lapang. Pilihan keluarga yang menginginkan tampilan modern."
 };
 
 // Spesifikasi teknis per model. Angka dapat berbeda menurut tahun, trim, dan varian.
@@ -1338,7 +1509,20 @@ const vehicleSpecs = {
       "Kapasitas",
       "5 penumpang"
     ]
-  ]
+  ],
+  "39": [["Mesin", "2.0L bensin / 2.4L diesel (2GD-FTV)"], ["Tenaga maksimum", "Sesuai varian (diesel ± 147 PS)"], ["Transmisi", "Manual / otomatis"], ["Penggerak", "Roda belakang (RWD)"], ["Kapasitas", "7 penumpang"]],
+  "40": [["Mesin", "1.198 cc, 3-silinder Dual VVT-i"], ["Tenaga maksimum", "± 88 PS"], ["Transmisi", "Manual / otomatis"], ["Penggerak", "Roda belakang (RWD)"], ["Kapasitas", "7 penumpang"]],
+  "41": [["Mesin", "1.5L bensin + motor listrik"], ["Sistem", "Hybrid"], ["Transmisi", "CVT"], ["Penggerak", "Roda depan (FWD)"], ["Kapasitas", "7 penumpang"]],
+  "42": [["Mesin", "2.4L turbo diesel (2GD-FTV)"], ["Tenaga maksimum", "Sesuai varian"], ["Transmisi", "Manual / otomatis"], ["Penggerak", "RWD / 4x4 sesuai varian"], ["Kapasitas", "2–5 penumpang"]],
+  "43": [["Mesin", "1.2L / 1.0L turbo"], ["Tenaga maksimum", "± 88 PS / ± 98 PS"], ["Transmisi", "CVT / D-CVT"], ["Penggerak", "Roda depan (FWD)"], ["Kapasitas", "5 penumpang"]],
+  "44": [["Mesin", "1.5L, 4-silinder"], ["Tenaga maksimum", "± 97 PS"], ["Transmisi", "5-percepatan manual"], ["Penggerak", "Roda belakang (RWD)"], ["Kapasitas", "Pick up / van / minibus"]],
+  "45": [["Mesin", "1.0L / 1.2L, 3-silinder"], ["Tenaga maksimum", "± 67 PS / ± 88 PS"], ["Transmisi", "Manual / otomatis"], ["Penggerak", "Roda depan (FWD)"], ["Kapasitas", "7 penumpang"]],
+  "46": [["Mesin", "1.5L Dual VVT-i"], ["Tenaga maksimum", "± 104 PS"], ["Transmisi", "5-percepatan manual / 4-percepatan otomatis"], ["Penggerak", "Roda belakang (RWD)"], ["Kapasitas", "7 penumpang"]],
+  "47": [["Mesin", "1.5L bensin"], ["Tenaga maksimum", "± 97 PS"], ["Transmisi", "5-percepatan manual"], ["Penggerak", "Roda belakang (RWD)"], ["Kapasitas", "2 penumpang + bak"]],
+  "48": [["Mesin", "1.5L bensin"], ["Tenaga maksimum", "Sesuai varian"], ["Transmisi", "Manual / otomatis"], ["Penggerak", "Roda depan (FWD)"], ["Kapasitas", "5 penumpang"]],
+  "49": [["Mesin", "1.5L turbo bensin"], ["Tenaga maksimum", "± 163 PS"], ["Transmisi", "CVT"], ["Penggerak", "Roda depan (FWD)"], ["Kapasitas", "7 penumpang"]],
+  "50": [["Mesin", "1.5L i-VTEC"], ["Tenaga maksimum", "± 121 PS"], ["Transmisi", "CVT"], ["Penggerak", "Roda depan (FWD)"], ["Kapasitas", "5 penumpang"]],
+  "51": [["Mesin", "1.5L bensin"], ["Tenaga maksimum", "± 115 PS"], ["Transmisi", "IVT"], ["Penggerak", "Roda depan (FWD)"], ["Kapasitas", "7 penumpang"]]
 };
 
 const grid = document.querySelector("#carGrid");
@@ -1361,36 +1545,75 @@ function whatsappLink(car){
 function photoPlaceholder(car){
   return `<div class="photo-placeholder"><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>FOTO MODEL MENYUSUL</small></div>`;
 }
+const filters = {brand:"all", body:"all", seats:"all", sort:"rank"};
+const brandSelect = document.querySelector("#brandSelect");
+const bodySelect = document.querySelector("#bodySelect");
+const seatSelect = document.querySelector("#seatSelect");
+const sortSelect = document.querySelector("#sortSelect");
+const loadList = key => { try{ return JSON.parse(localStorage.getItem(key)) || []; }catch(e){ return []; } };
+const saveList = (key, list) => { try{ localStorage.setItem(key, JSON.stringify(list)); }catch(e){} };
+let favorites = loadList("thomy-fav");
+let compareList = [];
+
+function bodyOf(car){
+  const c = car.category.toUpperCase();
+  if(/PICK UP|NIAGA/.test(c)) return "Pick Up & Niaga";
+  if(/SEDAN/.test(c)) return "Sedan";
+  if(/MPV/.test(c)) return "MPV";
+  if(/SUV|CROSSOVER|PERFORMANCE/.test(c)) return "SUV";
+  return "Hatchback & City Car";
+}
+function maxSeats(car){ const n = (car.seats.match(/\d+/g) || []).map(Number); return n.length ? Math.max(...n) : 0; }
+function isFiltered(){
+  return searchInput.value.trim() || activeFilter !== "all" || filters.brand !== "all" || filters.body !== "all" || filters.seats !== "all";
+}
+function fillBrands(){
+  const counts = {};
+  cars.forEach(car => counts[car.brand] = (counts[car.brand] || 0) + 1);
+  brandSelect.innerHTML = '<option value="all">Semua merek</option>' + Object.keys(counts).sort().map(b => `<option value="${b}">${b} (${counts[b]})</option>`).join("");
+}
 function renderCars(){
   const query = searchInput.value.trim().toLowerCase();
   const filtered = cars.filter(car => {
     const matchesType = activeFilter === "all" || car.type === activeFilter;
     const matchesQuery = `${car.brand} ${car.name} ${car.year} ${car.category}`.toLowerCase().includes(query);
-    return matchesType && matchesQuery;
+    const matchesBrand = filters.brand === "all" || car.brand === filters.brand;
+    const matchesBody = filters.body === "all" || bodyOf(car) === filters.body;
+    const seatMax = maxSeats(car);
+    const matchesSeats = filters.seats === "all" || (filters.seats === "small" ? seatMax <= 5 : seatMax >= 6);
+    return matchesType && matchesQuery && matchesBrand && matchesBody && matchesSeats;
   });
+  const sorters = {
+    rank:(x,y) => x.rank - y.rank,
+    new:(x,y) => y.year - x.year || x.rank - y.rank,
+    name:(x,y) => x.name.localeCompare(y.name),
+    brand:(x,y) => x.brand.localeCompare(y.brand) || x.name.localeCompare(y.name)
+  };
+  filtered.sort(sorters[filters.sort]);
   const isMobile = window.matchMedia("(max-width: 650px)").matches;
   const pageSize = isMobile ? 4 : 8;
-  const visibleCars = (showAllCars || query || activeFilter !== "all")
-    ? filtered
-    : filtered.slice(0, pageSize);
+  const visibleCars = (showAllCars || isFiltered()) ? filtered : filtered.slice(0, pageSize);
 
   resultCount.textContent = `${String(filtered.length).padStart(2,"0")} MOBIL`;
   emptyState.hidden = filtered.length !== 0;
   grid.innerHTML = visibleCars.map(car => `
     <article class="car-card">
       <div class="car-image">
-        ${car.image ? `<img src="${car.image}" alt="${car.brand} ${car.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.hidden=false"><div class="photo-placeholder" hidden><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>FOTO MODEL MENYUSUL</small></div>` : photoPlaceholder(car)}
-        <span class="car-type">${car.type.toUpperCase()}</span><span class="car-number">TS—${String(car.id).padStart(3,"0")}</span>
+        <div class="photo-placeholder"><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>MEMUAT FOTO…</small></div>
+        <img class="car-photo" data-car="${car.id}" alt="${car.brand} ${car.name}" loading="lazy" hidden>
+        <button class="fav-btn" data-fav="${car.id}" aria-label="Simpan ke favorit" aria-pressed="false">♡</button><span class="car-type">${car.type.toUpperCase()}</span>${car.hot ? '<span class="car-hot">TERLARIS 2026</span>' : ''}<span class="car-number">TS—${String(car.id).padStart(3,"0")}</span>
       </div>
       <div class="car-info">
         <div class="car-meta"><span>${car.brand.toUpperCase()}</span><span>${car.year} / ${car.category}</span></div>
         <h3>${car.name}</h3><p class="car-desc">${car.description}</p>
-        <div class="car-bottom"><span class="car-price">${car.price}</span><button class="detail-btn" data-detail="${car.id}">INFO MOBIL ↗</button></div>
+        <div class="car-bottom"><span class="car-price">${car.price}</span><button class="detail-btn" data-detail="${car.id}">INFO MOBIL ↗</button><button class="compare-btn" data-compare="${car.id}">+ BANDINGKAN</button></div>
         <a class="car-wa-button" href="${whatsappLink(car)}" target="_blank" rel="noopener">TANYA VIA WHATSAPP <span>↗</span></a>
       </div>
     </article>`).join("");
+  hydratePhotos(grid);
+  syncStates();
 
-  const hasMore = filtered.length > pageSize && !query && activeFilter === "all";
+  const hasMore = filtered.length > pageSize && !isFiltered();
   catalogMoreBtn.hidden = !hasMore && !showAllCars;
   catalogMoreBtn.innerHTML = showAllCars
     ? 'TAMPILKAN LEBIH SEDIKIT <span>↑</span>'
@@ -1406,7 +1629,7 @@ function openDetail(id){
   const rows = vehicleSpecs[car.id] || [];
   dialogContent.innerHTML = `
     <div class="dialog-layout">
-      ${car.image ? `<div class="dialog-photo"><img src="${car.image}" alt="${car.brand} ${car.name}" onerror="this.style.display='none';this.nextElementSibling.hidden=false">${photoPlaceholder(car).replace('photo-placeholder','photo-placeholder dialog-photo-placeholder')}</div>` : `<div class="dialog-photo">${photoPlaceholder(car).replace('photo-placeholder','photo-placeholder dialog-photo-placeholder')}</div>`}
+      <div class="dialog-photo"><div class="photo-placeholder dialog-photo-placeholder"><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>MEMUAT FOTO…</small></div><img class="car-photo" data-car="${car.id}" alt="${car.brand} ${car.name}" hidden></div>
       <div class="dialog-copy">
         <p class="eyebrow">${car.brand.toUpperCase()} / ${car.category}</p>
         <h3>${car.name}</h3>
@@ -1421,6 +1644,7 @@ function openDetail(id){
         <a class="button button-orange detail-wa" href="${whatsappLink(car)}" target="_blank" rel="noopener">TANYA VIA WHATSAPP ↗</a>
       </div>
     </div>`;
+  hydratePhotos(dialogContent);
   dialog.showModal();
 }
 document.querySelectorAll(".filter-btn").forEach(button => button.addEventListener("click", () => {
@@ -1432,7 +1656,7 @@ document.querySelectorAll(".filter-btn").forEach(button => button.addEventListen
 }));
 searchInput.addEventListener("input", () => { showAllCars = false; renderCars(); });
 catalogMoreBtn.addEventListener("click", () => { showAllCars = !showAllCars; renderCars(); if(!showAllCars) document.querySelector("#katalog").scrollIntoView({behavior:"smooth",block:"start"}); });
-window.addEventListener("resize", () => { if(!showAllCars && !searchInput.value.trim() && activeFilter === "all") renderCars(); });
+window.addEventListener("resize", () => { if(!showAllCars && !isFiltered()) renderCars(); });
 grid.addEventListener("click", event => {
   const button = event.target.closest("[data-detail]");
   if(button) openDetail(button.dataset.detail);
@@ -1453,12 +1677,94 @@ document.querySelectorAll(".desktop-nav a").forEach(link => link.addEventListene
   document.querySelector(".desktop-nav").classList.remove("open");
   menuButton.setAttribute("aria-expanded","false");
 }));
-renderCars();
 
 // Quick action from the EV spotlight section.
 document.querySelector("[data-show-electric]")?.addEventListener("click", () => {
   activeFilter = "listrik";
   showAllCars = false;
+  document.querySelector("#katalog").scrollIntoView({behavior:"smooth"});
   document.querySelectorAll(".filter-btn").forEach(button => button.classList.toggle("active", button.dataset.filter === "listrik"));
   renderCars();
 });
+
+// ===== Fitur showroom: filter merek/tipe/kapasitas, urutan, favorit, bandingkan =====
+const favCount = document.querySelector("#favCount");
+const compareBar = document.querySelector("#compareBar");
+const byId = id => cars.find(car => car.id === Number(id));
+
+function syncStates(){
+  document.querySelectorAll("[data-fav]").forEach(btn => {
+    const on = favorites.includes(Number(btn.dataset.fav));
+    btn.textContent = on ? "♥" : "♡"; btn.classList.toggle("on", on); btn.setAttribute("aria-pressed", String(on));
+  });
+  document.querySelectorAll("[data-compare]").forEach(btn => {
+    const on = compareList.includes(Number(btn.dataset.compare));
+    btn.textContent = on ? "✓ DIPILIH" : "+ BANDINGKAN"; btn.classList.toggle("on", on);
+  });
+  favCount.textContent = favorites.length;
+  compareBar.hidden = compareList.length === 0;
+  document.querySelector("#compareText").textContent = `${compareList.length}/3 MOBIL`;
+}
+function toggleFav(id){
+  id = Number(id);
+  favorites = favorites.includes(id) ? favorites.filter(x => x !== id) : [...favorites, id];
+  saveList("thomy-fav", favorites); syncStates();
+}
+function toggleCompare(id){
+  id = Number(id);
+  if(compareList.includes(id)) compareList = compareList.filter(x => x !== id);
+  else if(compareList.length >= 3){ alert("Maksimal 3 mobil untuk dibandingkan."); return; }
+  else compareList = [...compareList, id];
+  syncStates();
+}
+grid.addEventListener("click", event => {
+  const fav = event.target.closest("[data-fav]"); if(fav) toggleFav(fav.dataset.fav);
+  const cmp = event.target.closest("[data-compare]"); if(cmp) toggleCompare(cmp.dataset.compare);
+});
+[[brandSelect,"brand"],[bodySelect,"body"],[seatSelect,"seats"],[sortSelect,"sort"]].forEach(([el,key]) => el.addEventListener("change", () => { filters[key] = el.value; showAllCars = false; renderCars(); }));
+document.querySelector("#resetFilters").addEventListener("click", () => {
+  Object.assign(filters, {brand:"all", body:"all", seats:"all", sort:"rank"});
+  brandSelect.value = bodySelect.value = seatSelect.value = "all"; sortSelect.value = "rank";
+  searchInput.value = ""; activeFilter = "all"; showAllCars = false;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b.dataset.filter === "all"));
+  renderCars();
+});
+
+function miniCard(car){
+  return `<div class="fav-row"><img class="car-photo" data-car="${car.id}" alt="${car.brand} ${car.name}" hidden><div class="fav-ph"><div class="photo-placeholder"><span>${car.brand.toUpperCase()}</span></div></div><div><small>${car.brand.toUpperCase()} · ${car.year}</small><b>${car.name}</b></div><button class="mini-btn" data-unfav="${car.id}" aria-label="Hapus">✕</button></div>`;
+}
+function openFavorites(){
+  const list = favorites.map(byId).filter(Boolean);
+  const msg = "Halo Thomy Showroom, saya tertarik dengan mobil berikut:\n" + list.map((c,i) => `${i+1}. ${c.brand} ${c.name} (${c.year})`).join("\n") + "\nBoleh minta informasi harga dan ketersediaannya?";
+  dialogContent.innerHTML = `<div class="panel-dialog"><p class="eyebrow">DAFTAR FAVORIT</p><h3>Mobil pilihanmu</h3>${
+    list.length ? list.map(miniCard).join("") + `<a class="button button-orange detail-wa" href="https://wa.me/${CONTACT_WA}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">TANYA ${list.length} MOBIL VIA WHATSAPP ↗</a>`
+    : '<p class="detail-description">Belum ada favorit. Tekan ikon ♡ pada kartu mobil untuk menyimpannya.</p>'}</div>`;
+  hydratePhotos(dialogContent); dialog.showModal();
+}
+document.querySelector("#openFavorites").addEventListener("click", openFavorites);
+dialogContent.addEventListener("click", event => {
+  const un = event.target.closest("[data-unfav]");
+  if(un){ toggleFav(un.dataset.unfav); openFavorites(); }
+});
+
+function openCompare(){
+  const list = compareList.map(byId).filter(Boolean);
+  if(list.length < 2){ alert("Pilih minimal 2 mobil untuk dibandingkan."); return; }
+  const labels = [];
+  list.forEach(car => (vehicleSpecs[car.id] || []).forEach(([l]) => { if(!labels.includes(l)) labels.push(l); }));
+  const rowOf = (label, get) => `<tr><th>${label}</th>${list.map(c => `<td>${get(c)}</td>`).join("")}</tr>`;
+  const msg = "Halo Thomy Showroom, saya sedang membandingkan " + list.map(c => `${c.brand} ${c.name}`).join(", ") + ". Boleh minta info harga dan ketersediaannya?";
+  dialogContent.innerHTML = `<div class="panel-dialog"><p class="eyebrow">BANDINGKAN</p><h3>${list.map(c => c.name).join(" vs ")}</h3>
+    <div class="compare-scroll"><table class="compare-table">
+      <tr><th></th>${list.map(c => `<td class="cmp-photo"><img class="car-photo" data-car="${c.id}" alt="${c.brand} ${c.name}" hidden><div class="photo-placeholder"><span>${c.brand.toUpperCase()}</span><strong>${c.name}</strong></div></td>`).join("")}</tr>
+      ${rowOf("Merek", c => c.brand)}${rowOf("Tahun", c => c.year)}${rowOf("Tipe bodi", bodyOf)}${rowOf("Bahan bakar", c => c.type.toUpperCase())}
+      ${labels.map(l => rowOf(l, c => ((vehicleSpecs[c.id] || []).find(r => r[0] === l) || [,"—"])[1])).join("")}
+      ${rowOf("Harga", () => "Tanya showroom")}
+    </table></div>
+    <a class="button button-orange detail-wa" href="https://wa.me/${CONTACT_WA}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">TANYA VIA WHATSAPP ↗</a></div>`;
+  hydratePhotos(dialogContent); dialog.showModal();
+}
+document.querySelector("#compareOpen").addEventListener("click", openCompare);
+document.querySelector("#compareClear").addEventListener("click", () => { compareList = []; syncStates(); });
+fillBrands();
+renderCars();

@@ -243,3 +243,45 @@
   .contact-wa-card .contact-number{font-size:25px}
   .contact-service-card{min-height:170px}
 }
+
+/* v12: foto online dimuat belakangan, badge terlaris */
+img.car-photo[hidden]{display:none!important}
+.car-image .photo-placeholder{position:absolute;inset:0;min-height:0}
+.dialog-photo{position:relative}
+.dialog-photo .photo-placeholder{position:absolute;inset:0}
+.car-hot{position:absolute;left:12px;bottom:10px;padding:5px 8px;background:var(--ink);color:var(--paper);font-size:8px;font-weight:800;letter-spacing:.1em;z-index:1}
+
+/* v13: panel filter, favorit, bandingkan */
+.filter-panel{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:12px;align-items:end;margin-top:16px}
+.select-field{display:flex;flex-direction:column;gap:5px;font-size:8px;font-weight:800;letter-spacing:.12em;color:var(--muted)}
+.select-field select{border:1.5px solid var(--ink);background:#faf8f1;padding:10px 8px;font:600 12px var(--body);color:var(--ink);border-radius:0;width:100%}
+.panel-actions{display:flex;gap:8px}
+.mini-btn{border:1.5px solid var(--ink);background:transparent;padding:11px 12px;font-size:9px;font-weight:800;letter-spacing:.08em;cursor:pointer;white-space:nowrap}
+.mini-btn:hover{background:var(--ink);color:var(--paper)}
+.mini-fav b{display:inline-block;min-width:16px;margin-left:3px;padding:1px 4px;background:var(--orange);color:#fff;text-align:center}
+.fav-btn{position:absolute;top:10px;right:10px;width:34px;height:34px;border:1.5px solid var(--ink);background:#faf8f1;font-size:18px;line-height:1;cursor:pointer;z-index:2}
+.fav-btn.on{background:var(--orange);color:#fff}
+.compare-btn{border:0;background:transparent;font-size:10px;font-weight:800;cursor:pointer;text-align:left;padding:0}
+.compare-btn.on{color:var(--orange)}
+.car-bottom{flex-wrap:wrap}
+.compare-bar{position:fixed;left:14px;bottom:76px;z-index:31;display:flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);padding:10px 12px;font-size:10px;font-weight:800;letter-spacing:.06em;box-shadow:4px 4px 0 var(--orange)}
+.compare-bar[hidden]{display:none}
+.compare-bar button{background:var(--paper);color:var(--ink);border:0;padding:8px 10px;font-size:9px;font-weight:800;cursor:pointer}
+.panel-dialog{padding:34px 28px}
+.panel-dialog h3{font:700 30px var(--display);letter-spacing:-.05em;margin:8px 0 18px}
+.fav-row{display:grid;grid-template-columns:84px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid #c9c4b9}
+.fav-row img,.fav-ph{width:84px;height:56px;object-fit:cover}
+.fav-ph .photo-placeholder{min-height:0;height:56px;padding:6px}
+.fav-ph .photo-placeholder:before{display:none}
+.fav-row small{display:block;font-size:8px;font-weight:800;letter-spacing:.1em;color:var(--muted)}
+.fav-row b{font-size:14px}
+.compare-scroll{overflow-x:auto}
+.compare-table{width:100%;border-collapse:collapse;font-size:11px;min-width:420px}
+.compare-table th,.compare-table td{padding:9px 8px;border-bottom:1px solid #c9c4b9;text-align:left;vertical-align:top}
+.compare-table th{font-size:8px;letter-spacing:.1em;color:var(--muted);width:92px}
+.cmp-photo img{width:100%;height:80px;object-fit:cover}
+.cmp-photo .photo-placeholder{min-height:80px;height:80px;padding:8px}
+.cmp-photo .photo-placeholder:before{display:none}
+.cmp-photo .photo-placeholder strong{font-size:14px}
+@media(max-width:900px){.filter-panel{grid-template-columns:1fr 1fr}.panel-actions{grid-column:1/-1}}
+@media(max-width:650px){.filter-panel{gap:10px}.panel-actions .mini-btn{flex:1}.compare-bar{bottom:68px;left:10px;right:10px;justify-content:space-between}}

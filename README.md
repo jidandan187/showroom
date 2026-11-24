@@ -53,3 +53,8 @@ v10: Catalog initially shows 4 vehicles on mobile and 8 on wider screens, with a
 
 
 v11: All vehicle photos are loaded through online image URLs. No local photo assets or image folder are required. Models without a fixed photo URL receive a remote model-tagged image fallback.
+
+
+v12: Foto dicari otomatis secara online (Wikimedia Commons, cadangan Wikipedia) berdasarkan nama mobil dan di-cache di browser. Katalog bertambah menjadi 51 model sesuai penjualan Indonesia 2026 (Gaikindo), model terlaris tampil lebih dulu dengan badge TERLARIS 2026.
+
+v13: Panel filter (merek, tipe bodi, kapasitas, bahan bakar), urutan (terlaris/tahun/nama/merek), favorit (tersimpan di browser, kirim semua via WhatsApp), dan bandingkan hingga 3 mobil.

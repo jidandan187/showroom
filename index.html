@@ -63,9 +63,22 @@
           <button class="filter-btn" data-filter="listrik">LISTRIK</button>
         </div>
       </div>
-      <div class="catalog-meta"><span id="resultCount">38 MOBIL</span><span>DEMO CATALOG / HUBUNGI UNTUK KETERSEDIAAN</span></div>
+      <div class="filter-panel">
+        <label class="select-field"><span>MEREK</span><select id="brandSelect"><option value="all">Semua merek</option></select></label>
+        <label class="select-field"><span>TIPE BODI</span><select id="bodySelect">
+          <option value="all">Semua tipe</option><option value="Hatchback & City Car">Hatchback & City Car</option><option value="MPV">MPV</option><option value="SUV">SUV & Crossover</option><option value="Sedan">Sedan</option><option value="Pick Up & Niaga">Pick Up & Niaga</option></select></label>
+        <label class="select-field"><span>KAPASITAS</span><select id="seatSelect">
+          <option value="all">Semua kapasitas</option><option value="small">Sampai 5 penumpang</option><option value="large">6 penumpang ke atas</option></select></label>
+        <label class="select-field"><span>URUTKAN</span><select id="sortSelect">
+          <option value="rank">Terlaris 2026</option><option value="new">Tahun terbaru</option><option value="name">Nama A–Z</option><option value="brand">Merek A–Z</option></select></label>
+        <div class="panel-actions">
+          <button class="mini-btn" id="resetFilters" type="button">RESET ✕</button>
+          <button class="mini-btn mini-fav" id="openFavorites" type="button">♥ FAVORIT <b id="favCount">0</b></button>
+        </div>
+      </div>
+      <div class="catalog-meta"><span id="resultCount">51 MOBIL</span><span>KATALOG 2026 / HUBUNGI UNTUK KETERSEDIAAN</span></div>
       <div class="car-grid" id="carGrid" aria-live="polite"></div>
-      <div class="catalog-more-wrap"><p class="catalog-more-note" id="catalogMoreNote">MENAMPILKAN 4 DARI 38 MOBIL</p><button class="button button-dark catalog-more-btn" id="catalogMoreBtn" type="button">LIHAT SEMUA MOBIL <span>↗</span></button></div>
+      <div class="catalog-more-wrap"><p class="catalog-more-note" id="catalogMoreNote">MENAMPILKAN 4 DARI 51 MOBIL</p><button class="button button-dark catalog-more-btn" id="catalogMoreBtn" type="button">LIHAT SEMUA MOBIL <span>↗</span></button></div>
       <div class="empty-state" id="emptyState" hidden>Mobil tidak ditemukan. Coba kata kunci atau kategori lain.</div>
     </section>
 
@@ -118,6 +131,8 @@
   <a class="whatsapp-float" id="floatingWhatsapp" href="#kontak" target="_blank" rel="noopener" aria-label="Chat Thomy Showroom via WhatsApp"><span class="wa-symbol">◔</span><span>CHAT WHATSAPP</span><b>↗</b></a>
 
   <footer class="footer"><a class="brand" href="#">THOMY<span>.</span></a><span>BUILT FOR THE NEXT JOURNEY.</span><span>© 2026 THOMY SHOWROOM</span></footer>
+
+  <div class="compare-bar" id="compareBar" hidden><span id="compareText">0 MOBIL</span><button type="button" id="compareOpen">BANDINGKAN ↗</button><button type="button" id="compareClear" aria-label="Kosongkan">✕</button></div>
 
   <dialog class="car-dialog" id="carDialog">
     <button class="dialog-close" id="dialogClose" aria-label="Tutup detail">×</button>

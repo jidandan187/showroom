@@ -58,3 +58,17 @@ v11: All vehicle photos are loaded through online image URLs. No local photo ass
 v12: Foto dicari otomatis secara online (Wikimedia Commons, cadangan Wikipedia) berdasarkan nama mobil dan di-cache di browser. Katalog bertambah menjadi 51 model sesuai penjualan Indonesia 2026 (Gaikindo), model terlaris tampil lebih dulu dengan badge TERLARIS 2026.
 
 v13: Panel filter (merek, tipe bodi, kapasitas, bahan bakar), urutan (terlaris/tahun/nama/merek), favorit (tersimpan di browser, kirim semua via WhatsApp), dan bandingkan hingga 3 mobil.
+
+## v14 — fitur layanan (tanpa alamat, harga & booking via WhatsApp)
+- Status unit per mobil: Ready / Indent / Terjual / Bisa dicarikan, plus kondisi (baru/bekas), warna, kilometer; ada filter Status dan Kondisi.
+- Form di bagian Layanan: Carikan Mobil, Booking Jadwal (lihat unit / test drive), Tukar Tambah / Jual. Semuanya membuka WhatsApp dengan pesan terisi otomatis.
+- Link per mobil: `index.html#mobil-39` membuka detail Innova Reborn. Tombol Bagikan memakai menu share HP.
+- FAQ.
+- Galeri foto unit asli: isi kolom foto1–foto3 di sheet; foto pertama menggantikan foto katalog.
+
+### Update stok lewat Google Sheet (tanpa edit kode)
+1. Buka `data-unit-template.csv` di Google Sheets (File → Import).
+2. Ubah kolom `status` (ready / indent / sold / cari), `kondisi` (baru / bekas), `warna`, `km`, `harga` (contoh: Rp 250 juta; kosongkan = Tanya harga), `foto1`–`foto3` (link gambar), `catatan`.
+3. Tambah mobil baru: isi baris dengan id baru (mis. 100), `brand`, `name`, `tahun`.
+4. File → Share → Publish to web → pilih sheet → format CSV → Publish. Salin link.
+5. Tempel link itu ke `SHEET_CSV_URL` di bagian atas blok "v14" pada `script.js`.

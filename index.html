@@ -15,7 +15,7 @@
   <header class="site-header">
     <a class="brand" href="#" aria-label="Thomy Showroom home">THOMY<span>.</span></a>
     <nav class="desktop-nav" aria-label="Navigasi utama">
-      <a href="#katalog">KATALOG</a><a href="#tentang">TENTANG</a><a href="#kontak">KONTAK</a>
+      <a href="#katalog">KATALOG</a><a href="#layanan">LAYANAN</a><a href="#faq">FAQ</a><a href="#kontak">KONTAK</a>
     </nav>
     <a class="header-cta" href="#katalog">LIHAT MOBIL <span>↗</span></a>
     <button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button>
@@ -69,6 +69,10 @@
           <option value="all">Semua tipe</option><option value="Hatchback & City Car">Hatchback & City Car</option><option value="MPV">MPV</option><option value="SUV">SUV & Crossover</option><option value="Sedan">Sedan</option><option value="Pick Up & Niaga">Pick Up & Niaga</option></select></label>
         <label class="select-field"><span>KAPASITAS</span><select id="seatSelect">
           <option value="all">Semua kapasitas</option><option value="small">Sampai 5 penumpang</option><option value="large">6 penumpang ke atas</option></select></label>
+        <label class="select-field"><span>STATUS</span><select id="statusSelect">
+          <option value="all">Semua status</option><option value="ready">Ready</option><option value="indent">Indent</option><option value="cari">Bisa dicarikan</option></select></label>
+        <label class="select-field"><span>KONDISI</span><select id="condSelect">
+          <option value="all">Baru & bekas</option><option value="baru">Baru</option><option value="bekas">Bekas</option></select></label>
         <label class="select-field"><span>URUTKAN</span><select id="sortSelect">
           <option value="rank">Terlaris 2026</option><option value="new">Tahun terbaru</option><option value="name">Nama A–Z</option><option value="brand">Merek A–Z</option></select></label>
         <div class="panel-actions">
@@ -100,6 +104,58 @@
       </div>
     </section>
 
+    <section class="services section-wrap" id="layanan">
+      <div class="section-heading">
+        <div><p class="eyebrow">HOW WE HELP / 2026</p><h2>KAMI CARIKAN<br>YANG <span>KAMU BUTUH.</span></h2></div>
+        <p class="section-intro">Belum nemu yang pas? Ceritakan kebutuhan dan budget-mu. Kami bantu carikan unitnya, atur jadwal lihat unit, sampai urusan tukar tambah — semuanya lewat WhatsApp.</p>
+      </div>
+      <ol class="steps">
+        <li><span>01</span><b>PILIH / CERITAKAN</b><small>Pilih dari katalog atau isi form kebutuhan.</small></li>
+        <li><span>02</span><b>CHAT WHATSAPP</b><small>Pesan terisi otomatis, tinggal kirim.</small></li>
+        <li><span>03</span><b>HARGA & UNIT</b><small>Harga dan ketersediaan dikonfirmasi via chat.</small></li>
+        <li><span>04</span><b>BOOKING JADWAL</b><small>Atur jadwal lihat unit atau test drive.</small></li>
+      </ol>
+      <div class="tabs" role="tablist" aria-label="Layanan">
+        <button class="tab-btn active" role="tab" data-tab="find" type="button">CARIKAN MOBIL</button>
+        <button class="tab-btn" role="tab" data-tab="book" type="button">BOOKING JADWAL</button>
+        <button class="tab-btn" role="tab" data-tab="trade" type="button">TUKAR TAMBAH / JUAL</button>
+      </div>
+
+      <form class="svc-form" id="form-find" data-panel="find">
+        <label>NAMA<input name="nama" required placeholder="Nama kamu"></label>
+        <label>KEBUTUHAN<select name="kebutuhan"><option>Harian / dalam kota</option><option>Keluarga</option><option>Usaha / niaga</option><option>Perjalanan jauh</option><option>Lainnya</option></select></label>
+        <label>TIPE MOBIL<select name="tipe"><option value="">Belum menentukan</option><option>Hatchback & City Car</option><option>MPV</option><option>SUV & Crossover</option><option>Sedan</option><option>Pick Up & Niaga</option></select></label>
+        <label>BUDGET<select name="budget"><option value="">Dibahas via chat</option><option>Di bawah Rp 100 juta</option><option>Rp 100–200 juta</option><option>Rp 200–300 juta</option><option>Rp 300–500 juta</option><option>Rp 500 juta – 1 miliar</option><option>Di atas Rp 1 miliar</option></select></label>
+        <label>MEREK / MODEL INCARAN<input name="incaran" placeholder="Contoh: Innova, Xpander, atau EV"></label>
+        <label>KONDISI<select name="kondisi"><option>Baru atau bekas, bebas</option><option>Baru</option><option>Bekas</option></select></label>
+        <label>PEMBAYARAN<select name="bayar"><option>Belum tahu</option><option>Cash</option><option>Kredit</option></select></label>
+        <label class="wide">CATATAN<textarea name="catatan" rows="3" placeholder="Warna, jumlah penumpang, transmisi, dll."></textarea></label>
+        <button class="button button-orange" type="submit">KIRIM KEBUTUHAN VIA WHATSAPP ↗</button>
+      </form>
+
+      <form class="svc-form" id="form-book" data-panel="book" hidden>
+        <label>NAMA<input name="nama" required placeholder="Nama kamu"></label>
+        <label>MOBIL<select name="mobil" id="bookCar"></select></label>
+        <label>JENIS JADWAL<select name="jenis"><option>Lihat unit</option><option>Test drive</option><option>Konsultasi</option></select></label>
+        <label>TANGGAL<input name="tanggal" id="bookDate" type="date" required></label>
+        <label>JAM<select name="jam"><option>09:00</option><option>10:00</option><option>11:00</option><option>13:00</option><option>14:00</option><option>15:00</option><option>16:00</option></select></label>
+        <label class="wide">CATATAN<textarea name="catatan" rows="3" placeholder="Opsional"></textarea></label>
+        <p class="form-note wide">Jadwal bersifat permintaan. Lokasi dan konfirmasi waktu akan disepakati lewat WhatsApp.</p>
+        <button class="button button-orange" type="submit">BOOKING VIA WHATSAPP ↗</button>
+      </form>
+
+      <form class="svc-form" id="form-trade" data-panel="trade" hidden>
+        <label>NAMA<input name="nama" required placeholder="Nama kamu"></label>
+        <label>TUJUAN<select name="tujuan"><option>Tukar tambah</option><option>Jual mobil</option></select></label>
+        <label>MOBIL SAAT INI<input name="mobil" required placeholder="Contoh: Honda Brio 2018"></label>
+        <label>KILOMETER<input name="km" placeholder="Contoh: 60.000 km"></label>
+        <label>KONDISI<select name="kondisi"><option>Baik, siap pakai</option><option>Ada kerusakan ringan</option><option>Perlu perbaikan</option></select></label>
+        <label>MOBIL INCARAN (OPSIONAL)<input name="incaran" placeholder="Untuk tukar tambah"></label>
+        <label class="wide">CATATAN<textarea name="catatan" rows="3" placeholder="Surat-surat, riwayat servis, dll."></textarea></label>
+        <button class="button button-orange" type="submit">KIRIM VIA WHATSAPP ↗</button>
+      </form>
+    </section>
+
     <section class="about section-wrap" id="tentang">
       <div class="about-mark">TS<span>✳</span></div>
       <div class="about-copy">
@@ -107,6 +163,20 @@
         <h2>NO NEED TO<br>MAKE IT <span>COMPLICATED.</span></h2>
         <p>Memilih mobil seharusnya terasa mudah. Thomy Showroom menghadirkan pilihan kendaraan yang dekat dengan kebutuhan di Indonesia — dari mobil harian yang praktis sampai kendaraan keluarga dan mobil listrik.</p>
         <p class="small-note">Informasi unit, tahun, harga, dan ketersediaan dikonfirmasi langsung melalui kontak showroom.</p>
+      </div>
+    </section>
+
+    <section class="faq section-wrap" id="faq">
+      <p class="eyebrow">FAQ / PERTANYAAN UMUM</p>
+      <h2>SERING<br>DITANYAKAN<span>.</span></h2>
+      <div class="faq-list">
+        <details><summary>Berapa harga mobilnya?</summary><p>Harga tergantung unit, tahun, dan kondisi, jadi dikonfirmasi langsung lewat WhatsApp. Tekan tombol “Tanya via WhatsApp” pada mobil yang kamu minati.</p></details>
+        <details><summary>Mobil yang aku cari tidak ada di katalog.</summary><p>Tidak masalah. Isi form “Carikan Mobil” dengan kebutuhan dan budget-mu, lalu kami bantu carikan unit yang sesuai.</p></details>
+        <details><summary>Bagaimana cara booking lihat unit atau test drive?</summary><p>Buka bagian Layanan, pilih “Booking Jadwal”, isi mobil, tanggal, dan jam. Pesan WhatsApp akan terisi otomatis. Jadwal final dikonfirmasi lewat chat.</p></details>
+        <details><summary>Bisa tukar tambah atau jual mobil lama?</summary><p>Bisa. Isi form “Tukar Tambah / Jual” berisi data mobil kamu, lalu kirim lewat WhatsApp untuk dibahas.</p></details>
+        <details><summary>Bisa bayar kredit?</summary><p>Pilihan pembayaran, termasuk kredit, dibahas lewat WhatsApp sesuai unit yang dipilih.</p></details>
+        <details><summary>Apakah foto di katalog adalah unit asli?</summary><p>Foto katalog adalah gambar model sebagai referensi. Minta foto atau video unit sebenarnya lewat WhatsApp sebelum memutuskan.</p></details>
+        <details><summary>Apa arti status Ready, Indent, dan Bisa dicarikan?</summary><p>Ready berarti unit tersedia, Indent berarti perlu pemesanan lebih dulu, dan Bisa dicarikan berarti unit belum tersedia tetapi dapat kami carikan. Selalu konfirmasi lewat WhatsApp.</p></details>
       </div>
     </section>
 

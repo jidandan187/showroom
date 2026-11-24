@@ -1538,14 +1538,14 @@ let showAllCars = false;
 
 function whatsappLink(car){
   const message = car
-    ? `Halo Thomy Showroom, saya tertarik dengan ${car.brand} ${car.name} tahun ${car.year}. Boleh minta informasi harga dan ketersediaan unitnya?`
+    ? `Halo Thomy Showroom, saya tertarik dengan ${car.brand} ${car.name} tahun ${car.year}${car.kondisi ? ` (${car.kondisi})` : ""}${car.warna ? `, warna ${car.warna}` : ""}. Boleh minta informasi harga dan ketersediaan unitnya?`
     : "Halo Thomy Showroom, saya ingin bertanya tentang pilihan mobil yang tersedia.";
   return `https://wa.me/${CONTACT_WA}?text=${encodeURIComponent(message)}`;
 }
 function photoPlaceholder(car){
   return `<div class="photo-placeholder"><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>FOTO MODEL MENYUSUL</small></div>`;
 }
-const filters = {brand:"all", body:"all", seats:"all", sort:"rank"};
+const filters = {brand:"all", body:"all", seats:"all", status:"all", cond:"all", sort:"rank"};
 const brandSelect = document.querySelector("#brandSelect");
 const bodySelect = document.querySelector("#bodySelect");
 const seatSelect = document.querySelector("#seatSelect");
@@ -1565,7 +1565,7 @@ function bodyOf(car){
 }
 function maxSeats(car){ const n = (car.seats.match(/\d+/g) || []).map(Number); return n.length ? Math.max(...n) : 0; }
 function isFiltered(){
-  return searchInput.value.trim() || activeFilter !== "all" || filters.brand !== "all" || filters.body !== "all" || filters.seats !== "all";
+  return searchInput.value.trim() || activeFilter !== "all" || filters.brand !== "all" || filters.body !== "all" || filters.seats !== "all" || filters.status !== "all" || filters.cond !== "all";
 }
 function fillBrands(){
   const counts = {};
@@ -1581,7 +1581,9 @@ function renderCars(){
     const matchesBody = filters.body === "all" || bodyOf(car) === filters.body;
     const seatMax = maxSeats(car);
     const matchesSeats = filters.seats === "all" || (filters.seats === "small" ? seatMax <= 5 : seatMax >= 6);
-    return matchesType && matchesQuery && matchesBrand && matchesBody && matchesSeats;
+    const matchesStatus = filters.status === "all" || car.status === filters.status;
+    const matchesCond = filters.cond === "all" || car.kondisi === filters.cond;
+    return matchesType && matchesQuery && matchesBrand && matchesBody && matchesSeats && matchesStatus && matchesCond;
   });
   const sorters = {
     rank:(x,y) => x.rank - y.rank,
@@ -1605,9 +1607,9 @@ function renderCars(){
       </div>
       <div class="car-info">
         <div class="car-meta"><span>${car.brand.toUpperCase()}</span><span>${car.year} / ${car.category}</span></div>
-        <h3>${car.name}</h3><p class="car-desc">${car.description}</p>
+        <h3>${car.name}</h3>${chipsHTML(car)}<p class="car-desc">${car.description}</p>
         <div class="car-bottom"><span class="car-price">${car.price}</span><button class="detail-btn" data-detail="${car.id}">INFO MOBIL ↗</button><button class="compare-btn" data-compare="${car.id}">+ BANDINGKAN</button></div>
-        <a class="car-wa-button" href="${whatsappLink(car)}" target="_blank" rel="noopener">TANYA VIA WHATSAPP <span>↗</span></a>
+        <a class="car-wa-button" href="${whatsappLink(car)}" target="_blank" rel="noopener">${car.status === "sold" ? "CARI UNIT SERUPA" : "TANYA VIA WHATSAPP"} <span>↗</span></a>
       </div>
     </article>`).join("");
   hydratePhotos(grid);
@@ -1632,19 +1634,26 @@ function openDetail(id){
       <div class="dialog-photo"><div class="photo-placeholder dialog-photo-placeholder"><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>MEMUAT FOTO…</small></div><img class="car-photo" data-car="${car.id}" alt="${car.brand} ${car.name}" hidden></div>
       <div class="dialog-copy">
         <p class="eyebrow">${car.brand.toUpperCase()} / ${car.category}</p>
-        <h3>${car.name}</h3>
+        <h3>${car.name}</h3>${chipsHTML(car)}${car.catatan ? `<p class="detail-description">${car.catatan}</p>` : ""}
         <p class="detail-description">Spesifikasi teknis ${car.brand} ${car.name} tahun ${car.year}. Detail dapat berbeda sesuai tipe dan varian unit.</p>
         <div class="spec-heading"><span>TECHNICAL DATA</span><b>TS—${String(car.id).padStart(3,"0")}</b></div>
         <ul class="spec-list">
           ${rows.map(([label,value]) => `<li><span>${label}</span><b>${value}</b></li>`).join("")}
           <li><span>Tahun model katalog</span><b>${car.year}</b></li>
-          <li><span>Harga & ketersediaan</span><b>Konfirmasi showroom</b></li>
+          <li><span>Status</span><b>${STATUS_LABEL[car.status]}</b></li>
+          ${car.kondisi ? `<li><span>Kondisi</span><b>${car.kondisi.toUpperCase()}</b></li>` : ""}${car.warna ? `<li><span>Warna</span><b>${car.warna}</b></li>` : ""}${car.km ? `<li><span>Kilometer</span><b>${car.km}</b></li>` : ""}
+          <li><span>Harga</span><b>${car.price === "Tanya harga" ? "Via WhatsApp" : car.price}</b></li>
         </ul>
         <p class="spec-disclaimer">Catatan: spesifikasi merupakan referensi varian/pasar Indonesia dan dapat berbeda menurut tahun produksi, tipe, serta konfigurasi. Konfirmasi spesifikasi unit aktual kepada showroom sebelum transaksi.</p>
         <a class="button button-orange detail-wa" href="${whatsappLink(car)}" target="_blank" rel="noopener">TANYA VIA WHATSAPP ↗</a>
+        <div class="detail-actions"><button class="mini-btn" type="button" data-book="${car.id}">BOOKING JADWAL</button><button class="mini-btn" type="button" data-share="${car.id}">BAGIKAN ↗</button></div>
       </div>
     </div>`;
+  if(car.photos && car.photos.length > 1){
+    dialogContent.querySelector(".dialog-photo").insertAdjacentHTML("beforeend", `<div class="gallery-thumbs">${car.photos.map(u => `<button type="button" data-photo="${u}"><img src="${u}" alt=""></button>`).join("")}</div>`);
+  }
   hydratePhotos(dialogContent);
+  history.replaceState(null, "", "#mobil-" + car.id);
   dialog.showModal();
 }
 document.querySelectorAll(".filter-btn").forEach(button => button.addEventListener("click", () => {
@@ -1767,4 +1776,122 @@ function openCompare(){
 document.querySelector("#compareOpen").addEventListener("click", openCompare);
 document.querySelector("#compareClear").addEventListener("click", () => { compareList = []; syncStates(); });
 fillBrands();
+
+// ===== v14: status unit, booking, form layanan, data Google Sheet, link per mobil =====
+// Isi dengan link CSV Google Sheet yang sudah "Publish to web" (lihat README / data-unit-template.csv).
+// Kosongkan untuk memakai data bawaan.
+const SHEET_CSV_URL = "";
+const STATUS_LABEL = {ready:"READY", indent:"INDENT", sold:"TERJUAL", cari:"BISA DICARIKAN"};
+const normStatus = v => { v = String(v || "").trim().toLowerCase(); return STATUS_LABEL[v] ? v : "cari"; };
+cars.forEach(car => { car.status = normStatus(car.status); car.kondisi = car.kondisi || ""; car.photos = car.photos || []; });
+function chipsHTML(car){
+  return `<div class="car-chips"><span class="chip chip-${car.status}">${STATUS_LABEL[car.status]}</span>${car.kondisi ? `<span class="chip">${car.kondisi.toUpperCase()}</span>` : ""}${car.warna ? `<span class="chip">${car.warna.toUpperCase()}</span>` : ""}${car.km ? `<span class="chip">${car.km.toUpperCase()}</span>` : ""}</div>`;
+}
+function parseCSV(text){
+  const rows = []; let row = [], cell = "", q = false;
+  for(let i = 0; i < text.length; i++){
+    const ch = text[i];
+    if(q){ if(ch === '"'){ if(text[i+1] === '"'){ cell += '"'; i++; } else q = false; } else cell += ch; }
+    else if(ch === '"') q = true;
+    else if(ch === ","){ row.push(cell); cell = ""; }
+    else if(ch === "\n" || ch === "\r"){ if(ch === "\r" && text[i+1] === "\n") i++; row.push(cell); rows.push(row); row = []; cell = ""; }
+    else cell += ch;
+  }
+  if(cell || row.length){ row.push(cell); rows.push(row); }
+  return rows.filter(r => r.some(c => c.trim()));
+}
+async function loadSheet(){
+  if(!SHEET_CSV_URL) return;
+  try{
+    const res = await fetch(SHEET_CSV_URL, {cache:"no-store"});
+    if(!res.ok) return;
+    const rows = parseCSV(await res.text());
+    const head = rows.shift().map(c => c.trim().toLowerCase());
+    rows.forEach(r => {
+      const rec = {}; head.forEach((k, i) => rec[k] = (r[i] || "").trim());
+      let car = cars.find(c => c.id === Number(rec.id));
+      if(!car){
+        if(!rec.brand || !rec.name) return;
+        car = {id: Number(rec.id) || Math.max(...cars.map(c => c.id)) + 1, brand: rec.brand, name: rec.name, year: Number(rec.tahun) || new Date().getFullYear(), type: (rec.bahan_bakar || "bensin").toLowerCase(), category: rec.kategori || "MOBIL", engine:"", transmission:"", seats: rec.kapasitas || "5 penumpang", description: rec.catatan || "Unit tersedia, tanyakan detailnya via WhatsApp.", price:"Tanya harga", image:"", photos:[], status:"cari", kondisi:"", hot:false, rank:900 + cars.length};
+        cars.push(car);
+      }
+      if(rec.status) car.status = normStatus(rec.status);
+      if(rec.kondisi) car.kondisi = rec.kondisi.toLowerCase() === "bekas" ? "bekas" : "baru";
+      if(rec.warna) car.warna = rec.warna;
+      if(rec.km) car.km = rec.km;
+      if(rec.harga) car.price = rec.harga;
+      if(rec.catatan) car.catatan = rec.catatan;
+      if(rec.tahun) car.year = Number(rec.tahun) || car.year;
+      const photos = [rec.foto1, rec.foto2, rec.foto3].filter(Boolean);
+      if(photos.length){ car.photos = photos; car.image = photos[0]; delete imagePromises[car.id]; delete imagePromises[car.id + ":nd"]; }
+    });
+    fillBrands(); fillBookCars(); renderCars();
+  }catch(e){}
+}
+
+// --- filter tambahan
+const statusSelect = document.querySelector("#statusSelect");
+const condSelect = document.querySelector("#condSelect");
+[[statusSelect,"status"],[condSelect,"cond"]].forEach(([el,key]) => el.addEventListener("change", () => { filters[key] = el.value; showAllCars = false; renderCars(); }));
+document.querySelector("#resetFilters").addEventListener("click", () => {
+  Object.assign(filters, {status:"all", cond:"all"}); statusSelect.value = condSelect.value = "all"; renderCars();
+});
+
+// --- tab layanan + form WhatsApp
+const waUrl = text => `https://wa.me/${CONTACT_WA}?text=${encodeURIComponent(text)}`;
+const sendWA = lines => window.open(waUrl(lines.filter(Boolean).join("\n")), "_blank", "noopener");
+function showTab(name){
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
+  document.querySelectorAll(".svc-form").forEach(f => f.hidden = f.dataset.panel !== name);
+}
+document.querySelectorAll(".tab-btn").forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+function fillBookCars(){
+  const sel = document.querySelector("#bookCar"); const keep = sel.value;
+  sel.innerHTML = '<option value="">Belum menentukan / konsultasi</option>' + [...cars].sort((a,b) => (a.brand + a.name).localeCompare(b.brand + b.name)).map(c => `<option value="${c.id}">${c.brand} ${c.name}</option>`).join("");
+  sel.value = keep;
+}
+const bookDate = document.querySelector("#bookDate");
+const t0 = new Date(); bookDate.min = `${t0.getFullYear()}-${String(t0.getMonth()+1).padStart(2,"0")}-${String(t0.getDate()).padStart(2,"0")}`;
+const fd = form => Object.fromEntries(new FormData(form).entries());
+document.querySelector("#form-find").addEventListener("submit", e => {
+  e.preventDefault(); const d = fd(e.target);
+  sendWA(["Halo Thomy Showroom, saya ingin dicarikan mobil.", `Nama: ${d.nama}`, `Kebutuhan: ${d.kebutuhan}`, d.tipe && `Tipe: ${d.tipe}`, d.budget && `Budget: ${d.budget}`, d.incaran && `Incaran: ${d.incaran}`, `Kondisi: ${d.kondisi}`, `Pembayaran: ${d.bayar}`, d.catatan && `Catatan: ${d.catatan}`]);
+});
+document.querySelector("#form-book").addEventListener("submit", e => {
+  e.preventDefault(); const d = fd(e.target); const car = byId(d.mobil);
+  const tgl = new Date(d.tanggal + "T00:00:00").toLocaleDateString("id-ID", {weekday:"long", day:"numeric", month:"long", year:"numeric"});
+  sendWA([`Halo Thomy Showroom, saya ingin booking jadwal ${d.jenis.toLowerCase()}.`, `Nama: ${d.nama}`, car ? `Mobil: ${car.brand} ${car.name} (${car.year})` : "Mobil: belum menentukan", `Jadwal: ${tgl}, pukul ${d.jam}`, d.catatan && `Catatan: ${d.catatan}`, "Mohon konfirmasi ketersediaan jadwal dan lokasinya."]);
+});
+document.querySelector("#form-trade").addEventListener("submit", e => {
+  e.preventDefault(); const d = fd(e.target);
+  sendWA([`Halo Thomy Showroom, saya ingin ${d.tujuan.toLowerCase()}.`, `Nama: ${d.nama}`, `Mobil saat ini: ${d.mobil}`, d.km && `Kilometer: ${d.km}`, `Kondisi: ${d.kondisi}`, d.incaran && `Mobil incaran: ${d.incaran}`, d.catatan && `Catatan: ${d.catatan}`]);
+});
+
+// --- aksi di dialog detail: booking, bagikan, galeri
+async function shareCar(id){
+  const car = byId(id); const url = location.href.split("#")[0] + "#mobil-" + car.id;
+  try{
+    if(navigator.share){ await navigator.share({title: `${car.brand} ${car.name} — Thomy Showroom`, text: `Lihat ${car.brand} ${car.name} di Thomy Showroom`, url}); return; }
+    await navigator.clipboard.writeText(url); alert("Link mobil disalin.");
+  }catch(e){}
+}
+dialogContent.addEventListener("click", event => {
+  const share = event.target.closest("[data-share]"); if(share) shareCar(share.dataset.share);
+  const book = event.target.closest("[data-book]");
+  if(book){
+    dialog.close(); showTab("book"); document.querySelector("#bookCar").value = book.dataset.book;
+    document.querySelector("#layanan").scrollIntoView({behavior:"smooth"});
+  }
+  const ph = event.target.closest("[data-photo]");
+  if(ph){ const img = dialogContent.querySelector(".dialog-photo > img.car-photo"); if(img){ img.src = ph.dataset.photo; img.hidden = false; } }
+});
+dialog.addEventListener("close", () => { if(location.hash.startsWith("#mobil-")) history.replaceState(null, "", location.pathname + location.search); });
+function openFromHash(){
+  const m = location.hash.match(/^#mobil-(\d+)$/);
+  if(m && !dialog.open && byId(m[1])) openDetail(m[1]);
+}
+window.addEventListener("hashchange", openFromHash);
+fillBookCars();
 renderCars();
+openFromHash();
+loadSheet();

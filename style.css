@@ -324,3 +324,11 @@ img.car-photo[hidden]{display:none!important}
 .faq details p{margin:12px 0 0;font-size:13px;line-height:1.7;color:var(--muted);max-width:720px}
 @media(max-width:900px){.steps{grid-template-columns:1fr 1fr}.svc-form{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.services,.faq{padding-top:60px;padding-bottom:60px}.steps{grid-template-columns:1fr}.svc-form{grid-template-columns:1fr}.tab-btn{flex:1;padding:11px 6px;font-size:9px}.desktop-nav.open{gap:16px}}
+
+/* v15 */
+.car-image .photo-placeholder{padding:54px 12px 40px;justify-content:flex-end}
+.car-image .photo-placeholder strong{font-size:clamp(15px,4vw,22px)}
+.contact-hours{display:block;margin-top:6px;font-weight:700}
+.social-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.social-row a{border:1.5px solid var(--ink);padding:8px 10px;font-size:10px;font-weight:800;letter-spacing:.08em;text-decoration:none;color:inherit}
+.social-row a:hover{background:var(--ink);color:var(--paper)}

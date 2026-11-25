@@ -111,7 +111,7 @@ const imageHints = {
   50:[["Honda WR-V",["wrv"]]],
   51:[["Hyundai Stargazer",["stargazer"]]]
 };
-const WIKI_WORDS_BLOCK = /interior|engine|dashboard|steering|seats?\b|wheel|logo|emblem|badge|headlight|taillight|tail light|cockpit|console|trunk|boot\b|display|brochure|poster|diagram|drawing|police|taxi|ambulance|crash|accident|wreck|cutaway|chassis|undercarriage|gearbox|key\b|model car|toy|lego/i;
+const WIKI_WORDS_BLOCK = /\b(interior|engine|dashboard|steering|seats?|wheels?|logo|emblem|badge|headlights?|taillights?|tail light|cockpit|console|trunk|boot|display|brochure|poster|diagram|drawing|police|taxi|ambulance|crash|accident|wreck|cutaway|chassis|undercarriage|gearbox|key|model car|toy|lego)\b/i;
 const compact = text => String(text).toLowerCase().replace(/[^a-z0-9]/g, "");
 const IMG_CACHE = "thomy-img-v1:";
 const imagePromises = {};
@@ -166,7 +166,7 @@ function resolveCarImage(car, skipDirect){
   if(imagePromises[key]) return imagePromises[key];
   imagePromises[key] = (async () => {
     if(car.image && !skipDirect) return car.image;
-    const cached = readCache(car.id);
+    const cached = skipDirect ? null : readCache(car.id);
     if(cached) return cached.url;
     let found = "";
     for(const [query, must = [], not = [], prefer = []] of (imageHints[car.id] || [[`${car.brand} ${car.name}`, [compact(car.name)]]])){
@@ -191,13 +191,20 @@ function hydratePhotos(root){
     const fail = () => { img.hidden = true; if(placeholder) placeholder.hidden = false; if(small) small.textContent = "FOTO MODEL MENYUSUL"; };
     const show = url => {
       if(!url){ fail(); return; }
-      img.onload = () => { img.hidden = false; if(placeholder) placeholder.hidden = true; };
-      img.onerror = () => {
+      let done = false;
+      const probe = new Image();
+      const timer = setTimeout(() => { if(!done){ done = true; fail(); } }, 15000);
+      probe.onload = () => {
+        if(done) return; done = true; clearTimeout(timer);
+        img.src = url; img.hidden = false; if(placeholder) placeholder.hidden = true;
+      };
+      probe.onerror = () => {
+        if(done) return; done = true; clearTimeout(timer);
         if(img.dataset.retried) return fail();
         img.dataset.retried = "1";
         resolveCarImage(car, true).then(next => next && next !== url ? show(next) : fail());
       };
-      img.src = url;
+      probe.src = url;
     };
     if(small) small.textContent = "MEMUAT FOTO…";
     resolveCarImage(car).then(show);
@@ -1602,7 +1609,7 @@ function renderCars(){
     <article class="car-card">
       <div class="car-image">
         <div class="photo-placeholder"><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>MEMUAT FOTO…</small></div>
-        <img class="car-photo" data-car="${car.id}" alt="${car.brand} ${car.name}" loading="lazy" hidden>
+        <img class="car-photo" data-car="${car.id}" alt="${car.brand} ${car.name}" hidden>
         <button class="fav-btn" data-fav="${car.id}" aria-label="Simpan ke favorit" aria-pressed="false">♡</button><span class="car-type">${car.type.toUpperCase()}</span>${car.hot ? '<span class="car-hot">TERLARIS 2026</span>' : ''}<span class="car-number">TS—${String(car.id).padStart(3,"0")}</span>
       </div>
       <div class="car-info">
@@ -1780,7 +1787,7 @@ fillBrands();
 // ===== v14: status unit, booking, form layanan, data Google Sheet, link per mobil =====
 // Isi dengan link CSV Google Sheet yang sudah "Publish to web" (lihat README / data-unit-template.csv).
 // Kosongkan untuk memakai data bawaan.
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvisrbseZM4DF_qLts_PhRpK152Pe9pHuy_mP7ObFks2-1JuvFOI7J23mcDIUFJJlVwlOAIZUD9nlK/pub?output=csv";
+const SHEET_CSV_URL = "";
 const STATUS_LABEL = {ready:"READY", indent:"INDENT", sold:"TERJUAL", cari:"BISA DICARIKAN"};
 const normStatus = v => { v = String(v || "").trim().toLowerCase(); return STATUS_LABEL[v] ? v : "cari"; };
 cars.forEach(car => { car.status = normStatus(car.status); car.kondisi = car.kondisi || ""; car.photos = car.photos || []; });
@@ -1895,3 +1902,17 @@ fillBookCars();
 renderCars();
 openFromHash();
 loadSheet();
+
+// ===== v15: pengaturan tambahan (isi seperlunya; kosong = tidak ditampilkan) =====
+const SITE_CONFIG = {
+  instagram: "",   // contoh: "https://instagram.com/namaakun"
+  tiktok: "",      // contoh: "https://www.tiktok.com/@namaakun"
+  jamBalas: ""     // contoh: "Balas setiap hari 08.00–20.00 WIB"
+};
+(function renderExtras(){
+  const box = document.querySelector(".contact-wa-card");
+  if(!box) return;
+  const links = [["INSTAGRAM", SITE_CONFIG.instagram], ["TIKTOK", SITE_CONFIG.tiktok]].filter(([, u]) => u);
+  if(SITE_CONFIG.jamBalas) box.insertAdjacentHTML("beforeend", `<span class="contact-card-hint contact-hours">${SITE_CONFIG.jamBalas}</span>`);
+  if(links.length) box.insertAdjacentHTML("beforeend", `<span class="social-row">${links.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join("")}</span>`);
+})();

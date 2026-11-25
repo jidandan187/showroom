@@ -72,3 +72,9 @@ v13: Panel filter (merek, tipe bodi, kapasitas, bahan bakar), urutan (terlaris/t
 3. Tambah mobil baru: isi baris dengan id baru (mis. 100), `brand`, `name`, `tahun`.
 4. File → Share → Publish to web → pilih sheet → format CSV → Publish. Salin link.
 5. Tempel link itu ke `SHEET_CSV_URL` di bagian atas blok "v14" pada `script.js`.
+
+## v15
+- Perbaikan: foto kartu tidak lagi macet di "MEMUAT FOTO…" (penyebab: lazy-load pada gambar tersembunyi). Foto kini dimuat lewat preload dan ada batas waktu 15 detik.
+- Perbaikan: filter pencarian foto sebelumnya salah menolak judul berisi "Toyota"; sekarang memakai pencocokan kata utuh.
+- Judul bagian dan footer diganti ke Bahasa Indonesia; ditambah tag Open Graph untuk preview link di WhatsApp/Instagram.
+- `SITE_CONFIG` di akhir script.js: isi `instagram`, `tiktok`, dan `jamBalas` agar tampil di bagian Kontak (kosong = disembunyikan).

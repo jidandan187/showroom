@@ -112,6 +112,7 @@ const imageHints = {
   51:[["Hyundai Stargazer",["stargazer"]]]
 };
 const WIKI_WORDS_BLOCK = /\b(interior|engine|dashboard|steering|seats?|wheels?|logo|emblem|badge|headlights?|taillights?|tail light|cockpit|console|trunk|boot|display|brochure|poster|diagram|drawing|police|taxi|ambulance|crash|accident|wreck|cutaway|chassis|undercarriage|gearbox|key|model car|toy|lego)\b/i;
+const fetchT = (url, ms = 6000) => { const c = new AbortController(); const t = setTimeout(() => c.abort(), ms); return fetch(url, {signal: c.signal}).finally(() => clearTimeout(t)); };
 const compact = text => String(text).toLowerCase().replace(/[^a-z0-9]/g, "");
 const IMG_CACHE = "thomy-img-v1:";
 const imagePromises = {};
@@ -133,7 +134,7 @@ async function searchCommons(query, must = [], not = [], prefer = []){
   const url = "https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=20"
     + "&gsrsearch=" + encodeURIComponent(query + " filetype:bitmap")
     + "&prop=imageinfo&iiprop=url|mime&iiurlwidth=900";
-  const res = await fetch(url);
+  const res = await fetchT(url);
   if(!res.ok) return "";
   const data = await res.json();
   const pages = Object.values((data.query && data.query.pages) || {});
@@ -155,7 +156,7 @@ async function searchCommons(query, must = [], not = [], prefer = []){
   return best || "";
 }
 async function searchWikipedia(title){
-  const res = await fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(title.replace(/\s+/g, "_")) + "?redirect=true");
+  const res = await fetchT("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(title.replace(/\s+/g, "_")) + "?redirect=true");
   if(!res.ok) return "";
   const data = await res.json();
   const src = (data.thumbnail && data.thumbnail.source) || (data.originalimage && data.originalimage.source) || "";
@@ -207,7 +208,8 @@ function hydratePhotos(root){
       probe.src = url;
     };
     if(small) small.textContent = "MEMUAT FOTO…";
-    resolveCarImage(car).then(show);
+    const watchdog = setTimeout(() => { if(img.hidden) fail(); }, 22000);
+    resolveCarImage(car).then(url => { clearTimeout(watchdog); show(url); }).catch(fail);
   });
 }
 

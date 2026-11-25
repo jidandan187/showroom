@@ -78,3 +78,8 @@ v13: Panel filter (merek, tipe bodi, kapasitas, bahan bakar), urutan (terlaris/t
 - Perbaikan: filter pencarian foto sebelumnya salah menolak judul berisi "Toyota"; sekarang memakai pencocokan kata utuh.
 - Judul bagian dan footer diganti ke Bahasa Indonesia; ditambah tag Open Graph untuk preview link di WhatsApp/Instagram.
 - `SITE_CONFIG` di akhir script.js: isi `instagram`, `tiktok`, dan `jamBalas` agar tampil di bagian Kontak (kosong = disembunyikan).
+
+## v16
+- Permintaan foto kini punya batas waktu (6 dtk per permintaan, 22 dtk per kartu) sehingga kartu tidak pernah macet di "MEMUAT FOTO…"; jika foto tidak ditemukan tampil "FOTO MODEL MENYUSUL".
+- `script.js?v=16` dan `style.css?v=16` di index.html mencegah browser memakai file lama dari cache. Setiap kali mengubah script/style, naikkan angka v-nya.
+- Footer menampilkan nomor versi (· v16) untuk memastikan versi terbaru yang terbuka.

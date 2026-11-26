@@ -1791,7 +1791,7 @@ fillBrands();
 // ===== v14: status unit, booking, form layanan, data Google Sheet, link per mobil =====
 // Isi dengan link CSV Google Sheet yang sudah "Publish to web" (lihat README / data-unit-template.csv).
 // Kosongkan untuk memakai data bawaan.
-const SHEET_CSV_URL = "";
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRRXRCQKA7RoKRrblcr2e63icY4jhDTTMiloyKUigXh-wUKguFSqcv7K4makTVScdNVxKg_mnphTSJN/pub?output=csv";
 const STATUS_LABEL = {ready:"READY", indent:"INDENT", sold:"TERJUAL", cari:"BISA DICARIKAN"};
 const STATUS_ALIAS = {tersedia:"ready", stok:"ready", stock:"ready", available:"ready", ada:"ready", siap:"ready", inden:"indent", preorder:"indent", po:"indent", terjual:"sold", habis:"sold", soldout:"sold", dicarikan:"cari", bisadicarikan:"cari"};
 const normStatus = v => { v = String(v || "").toLowerCase().replace(/[^a-z]/g, ""); return STATUS_LABEL[v] ? v : (STATUS_ALIAS[v] || "cari"); };

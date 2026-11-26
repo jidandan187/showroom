@@ -1,128 +1,459 @@
-              return u if re.match(r"^https?://", u, re.I) else ""
+
+# Update berita otomotif otomatis
+# Path: .github/workflows/update-news.yml
+
+name: Update berita otomotif
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Ambil berita dari RSS
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          import sys
+          import html
+          import urllib.request
+          import urllib.parse
+          from datetime import datetime, timezone
+          from email.utils import parsedate_to_datetime
+          import xml.etree.ElementTree as ET
+
+          OUT = os.environ.get("NEWS_OUT", "articles.json")
+          MAX_ITEMS = 12
+          PER_SOURCE = 8
+          SUMMARY_CHARS = 170
+
+          UA = (
+              "Mozilla/5.0 (compatible; ThomyShowroomBot/1.0; "
+              "+https://jidandan187.github.io/showroom/)"
+          )
+
+          SOURCES = [
+              {
+                  "name": "Antara Otomotif",
+                  "urls": [
+                      "https://otomotif.antaranews.com/rss/terkini.xml",
+                      "https://www.antaranews.com/rss/otomotif.xml",
+                      "https://otomotif.antaranews.com/rss"
+                  ]
+              },
+              {
+                  "name": "detikOto",
+                  "urls": [
+                      "https://rss.detik.com/index.php/oto",
+                      "https://oto.detik.com/rss"
+                  ]
+              },
+              {
+                  "name": "Kompas Otomotif",
+                  "urls": [
+                      "https://otomotif.kompas.com/rss",
+                      "https://www.kompas.com/getrss/otomotif"
+                  ]
+              }
+          ]
+
+          if os.environ.get("FEEDS_OVERRIDE"):
+              SOURCES = json.loads(os.environ["FEEDS_OVERRIDE"])
+
+
+          def fetch(url):
+              req = urllib.request.Request(
+                  url,
+                  headers={
+                      "User-Agent": UA,
+                      "Accept": "application/rss+xml, application/xml, "
+                                "text/xml, */*"
+                  }
+              )
+
+              with urllib.request.urlopen(req, timeout=20) as response:
+                  return response.read()
+
+
+          def local(tag):
+              return (
+                  tag.rsplit("}", 1)[-1].lower()
+                  if isinstance(tag, str)
+                  else ""
+              )
+
+
+          def clean(text, limit=None):
+              text = html.unescape(
+                  re.sub(r"<[^>]+>", " ", text or "")
+              )
+              text = re.sub(r"\s+", " ", text).strip()
+
+              text = re.sub(
+                  r"^[A-Za-z .]{2,40}\((?:ANTARA|[A-Za-z]+)\)\s*[-–]\s*",
+                  "",
+                  text
+              )
+
+              if limit and len(text) > limit:
+                  text = (
+                      text[:limit]
+                      .rsplit(" ", 1)[0]
+                      .rstrip(",.;:- ")
+                      + "…"
+                  )
+
+              return text
+
+
+          def parse_date(value):
+              if not value:
+                  return None
+
+              value = value.strip()
+
+              try:
+                  dt = parsedate_to_datetime(value)
+              except Exception:
+                  try:
+                      dt = datetime.fromisoformat(
+                          value.replace("Z", "+00:00")
+                      )
+                  except Exception:
+                      return None
+
+              if dt.tzinfo is None:
+                  dt = dt.replace(tzinfo=timezone.utc)
+
+              return dt.astimezone(timezone.utc).isoformat(
+                  timespec="seconds"
+              )
+
+
+          def safe_url(url):
+              url = (url or "").strip()
+
+              if re.match(r"^https?://", url, re.I):
+                  return url
+
+              return ""
 
 
           def parse_feed(data, source):
               root = ET.fromstring(data)
-              entries = [e for e in root.iter() if local(e.tag) in ("item", "entry")]
+
+              entries = [
+                  element
+                  for element in root.iter()
+                  if local(element.tag) in ("item", "entry")
+              ]
+
               items = []
-              for e in entries[:PER_SOURCE * 2]:
-                  f = {"title": "", "link": "", "date": None, "desc": "", "image": ""}
-                  for c in e:
-                      t = local(c.tag)
-                      txt = (c.text or "").strip()
-                      if t == "title":
-                          f["title"] = clean(txt)
-                      elif t == "link":
-                          f["link"] = safe_url(c.attrib.get("href") or txt) or f["link"]
-                      elif t in ("pubdate", "published", "updated", "date") and not f["date"]:
-                          f["date"] = parse_date(txt)
-                      elif t in ("description", "summary") and not f["desc"]:
-                          f["desc"] = txt
-                      elif t == "encoded" and not f["desc"]:
-                          f["desc"] = txt
-                      elif t in ("content", "thumbnail", "enclosure"):
-                          u = safe_url(c.attrib.get("url"))
-                          typ = (c.attrib.get("type") or c.attrib.get("medium") or "image").lower()
-                          if u and "image" in typ and not f["image"]:
-                              f["image"] = u
-                  if not f["image"]:
-                      m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', f["desc"], re.I)
-                      if m:
-                          f["image"] = safe_url(html.unescape(m.group(1)))
-                  if f["title"] and f["link"]:
-                      items.append({"title": f["title"], "link": f["link"], "source": source,
-                                    "date": f["date"], "summary": clean(f["desc"], SUMMARY_CHARS), "image": f["image"]})
+
+              for entry in entries[:PER_SOURCE * 2]:
+                  article = {
+                      "title": "",
+                      "link": "",
+                      "date": None,
+                      "desc": "",
+                      "image": ""
+                  }
+
+                  for child in entry:
+                      tag = local(child.tag)
+                      value = (child.text or "").strip()
+
+                      if tag == "title":
+                          article["title"] = clean(value)
+
+                      elif tag == "link":
+                          article["link"] = (
+                              safe_url(child.attrib.get("href") or value)
+                              or article["link"]
+                          )
+
+                      elif tag in (
+                          "pubdate",
+                          "published",
+                          "updated",
+                          "date"
+                      ) and not article["date"]:
+                          article["date"] = parse_date(value)
+
+                      elif tag in (
+                          "description",
+                          "summary"
+                      ) and not article["desc"]:
+                          article["desc"] = value
+
+                      elif tag == "encoded" and not article["desc"]:
+                          article["desc"] = value
+
+                      elif tag in (
+                          "content",
+                          "thumbnail",
+                          "enclosure"
+                      ):
+                          image_url = safe_url(
+                              child.attrib.get("url")
+                          )
+
+                          image_type = (
+                              child.attrib.get("type")
+                              or child.attrib.get("medium")
+                              or "image"
+                          ).lower()
+
+                          if (
+                              image_url
+                              and "image" in image_type
+                              and not article["image"]
+                          ):
+                              article["image"] = image_url
+
+                  if not article["image"]:
+                      match = re.search(
+                          r'<img[^>]+src=["\']([^"\']+)["\']',
+                          article["desc"],
+                          re.I
+                      )
+
+                      if match:
+                          article["image"] = safe_url(
+                              html.unescape(match.group(1))
+                          )
+
+                  if article["title"] and article["link"]:
+                      items.append({
+                          "title": article["title"],
+                          "link": article["link"],
+                          "source": source,
+                          "date": article["date"],
+                          "summary": clean(
+                              article["desc"],
+                              SUMMARY_CHARS
+                          ),
+                          "image": article["image"]
+                      })
+
               return items[:PER_SOURCE]
 
 
           def og_image(url):
-              """Ambil gambar utama (og:image) dari halaman artikel bila RSS tidak menyertakan gambar."""
               try:
-                  req = urllib.request.Request(url, headers={"User-Agent": UA})
-                  with urllib.request.urlopen(req, timeout=10) as r:
-                      page = r.read(300000).decode("utf-8", "ignore")
+                  req = urllib.request.Request(
+                      url,
+                      headers={"User-Agent": UA}
+                  )
+
+                  with urllib.request.urlopen(req, timeout=10) as response:
+                      page = response.read(300000).decode(
+                          "utf-8",
+                          "ignore"
+                      )
+
               except Exception:
                   return ""
-              for pat in (r'<meta[^>]+(?:property|name)=["\'](?:og:image|twitter:image)["\'][^>]*content=["\']([^"\']+)["\']',
-                          r'<meta[^>]+content=["\']([^"\']+)["\'][^>]*(?:property|name)=["\'](?:og:image|twitter:image)["\']'):
-                  m = re.search(pat, page, re.I)
-                  if m:
-                      return safe_url(urllib.parse.urljoin(url, html.unescape(m.group(1))))
+
+              patterns = [
+                  r'<meta[^>]+(?:property|name)=["\']'
+                  r'(?:og:image|twitter:image)["\'][^>]*'
+                  r'content=["\']([^"\']+)["\']',
+
+                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]*'
+                  r'(?:property|name)=["\']'
+                  r'(?:og:image|twitter:image)["\']'
+              ]
+
+              for pattern in patterns:
+                  match = re.search(pattern, page, re.I)
+
+                  if match:
+                      return safe_url(
+                          urllib.parse.urljoin(
+                              url,
+                              html.unescape(match.group(1))
+                          )
+                      )
+
               return ""
 
 
           def discover(base, data):
-              text = data.decode("utf-8", "ignore")
-              found = re.findall(r'<link[^>]+type=["\']application/(?:rss|atom)\+xml["\'][^>]*href=["\']([^"\']+)["\']', text, re.I)
-              found += re.findall(r'href=["\']([^"\']+\.xml)["\']', text, re.I)
-              out = []
-              for f in found:
-                  u = urllib.parse.urljoin(base, f)
-                  if u not in out:
-                      out.append(u)
-              return out[:5]
+              page = data.decode("utf-8", "ignore")
+
+              found = re.findall(
+                  r'<link[^>]+type=["\']application/'
+                  r'(?:rss|atom)\+xml["\'][^>]*href=["\']([^"\']+)["\']',
+                  page,
+                  re.I
+              )
+
+              found += re.findall(
+                  r'href=["\']([^"\']+\.xml)["\']',
+                  page,
+                  re.I
+              )
+
+              results = []
+
+              for feed in found:
+                  url = urllib.parse.urljoin(base, feed)
+
+                  if url not in results:
+                      results.append(url)
+
+              return results[:5]
 
 
-          def load_source(src):
-              for url in src["urls"]:
+          def load_source(source):
+              for url in source["urls"]:
                   try:
                       data = fetch(url)
+
                       try:
-                          items = parse_feed(data, src["name"])
+                          items = parse_feed(
+                              data,
+                              source["name"]
+                          )
+
                       except ET.ParseError:
                           items = []
-                          for alt in discover(url, data):
+
+                          for alternative in discover(url, data):
                               try:
-                                  items = parse_feed(fetch(alt), src["name"])
+                                  items = parse_feed(
+                                      fetch(alternative),
+                                      source["name"]
+                                  )
+
                                   if items:
                                       break
+
                               except Exception:
                                   continue
+
                       if items:
-                          print(f"[ok]   {src['name']}: {len(items)} berita dari {url}")
+                          print(
+                              f"[ok] {source['name']}: "
+                              f"{len(items)} berita dari {url}"
+                          )
                           return items
-                      print(f"[kosong] {src['name']}: {url}")
-                  except Exception as ex:
-                      print(f"[gagal] {src['name']}: {url} -> {ex}")
+
+                      print(
+                          f"[kosong] {source['name']}: {url}"
+                      )
+
+                  except Exception as error:
+                      print(
+                          f"[gagal] {source['name']}: "
+                          f"{url} -> {error}"
+                      )
+
               return []
 
 
           def main():
-              items, seen = [], set()
-              for src in SOURCES:
-                  for it in load_source(src):
-                      key = re.sub(r"[?#].*$", "", it["link"])
+              items = []
+              seen = set()
+
+              for source in SOURCES:
+                  for article in load_source(source):
+                      key = re.sub(
+                          r"[?#].*$",
+                          "",
+                          article["link"]
+                      )
+
                       if key not in seen:
                           seen.add(key)
-                          items.append(it)
+                          items.append(article)
+
               if not items:
-                  print("Tidak ada berita yang berhasil diambil; articles.json dibiarkan seperti semula.")
+                  print(
+                      "Tidak ada berita yang berhasil diambil; "
+                      "articles.json dibiarkan seperti semula."
+                  )
                   return 0
-              items.sort(key=lambda x: x["date"] or "", reverse=True)
+
+              items.sort(
+                  key=lambda article: article["date"] or "",
+                  reverse=True
+              )
+
               items = items[:MAX_ITEMS]
+
               fetched = 0
-              for it in items:                       # lengkapi gambar yang kosong (maks. 12 halaman per proses)
-                  if not it["image"] and fetched < 12:
+
+              for article in items:
+                  if not article["image"] and fetched < 12:
                       fetched += 1
-                      it["image"] = og_image(it["link"])
+                      article["image"] = og_image(
+                          article["link"]
+                      )
+
               try:
-                  old = json.load(open(OUT, encoding="utf-8")).get("items")
+                  with open(OUT, encoding="utf-8") as file:
+                      old = json.load(file).get("items")
+
               except Exception:
                   old = None
+
               if old == items:
                   print("Tidak ada perubahan.")
                   return 0
-              data = {"updated": datetime.now(timezone.utc).isoformat(timespec="seconds"), "items": items}
-              with open(OUT, "w", encoding="utf-8") as fh:
-                  json.dump(data, fh, ensure_ascii=False, indent=2)
-              print(f"articles.json diperbarui: {len(items)} berita.")
+
+              data = {
+                  "updated": datetime.now(
+                      timezone.utc
+                  ).isoformat(timespec="seconds"),
+                  "items": items
+              }
+
+              with open(OUT, "w", encoding="utf-8") as file:
+                  json.dump(
+                      data,
+                      file,
+                      ensure_ascii=False,
+                      indent=2
+                  )
+
+              print(
+                  f"articles.json diperbarui: {len(items)} berita."
+              )
+
               return 0
 
 
           if __name__ == "__main__":
               sys.exit(main())
           PY
+
       - name: Simpan jika ada perubahan
         run: |
           git config user.name "news-bot"
           git config user.email "news-bot@users.noreply.github.com"
+
+          git add articles.json
+
+          git diff --cached --quiet || (
+            git commit -m "Update berita otomotif" &&
+            git push
+          )

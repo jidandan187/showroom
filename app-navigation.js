@@ -52,12 +52,19 @@
   }
   // News category chips are a light filter; original article links stay intact.
   document.querySelectorAll('[data-news-filter]').forEach(btn => btn.addEventListener('click', () => {
-    document.querySelectorAll('[data-news-filter]').forEach(b => b.classList.toggle('active',b===btn));
     const term = btn.dataset.newsFilter;
-    document.querySelectorAll('#newsGrid .news-card').forEach(card => {
+    const group = btn.parentElement;
+    group.querySelectorAll('[data-news-filter]').forEach(b => b.classList.toggle('active', b === btn));
+    const matches = card => {
       const txt = card.textContent.toLowerCase();
-      card.hidden = term !== 'all' && !(term === 'ev' ? /listrik|ev|hybrid|baterai|charging|byd|ioniq|aion/.test(txt) : term === 'industry' ? /industri|pabrik|penjualan|pasar|otomotif|produksi/.test(txt) : /baru|launch|meluncur|resmi|facelift|generasi/.test(txt));
-    });
+      return term === 'all' || (term === 'ev'
+        ? /listrik|ev|hybrid|baterai|charging|byd|ioniq|aion/.test(txt)
+        : term === 'industry'
+          ? /industri|pabrik|penjualan|pasar|otomotif|produksi/.test(txt)
+          : /baru|launch|meluncur|resmi|facelift|generasi/.test(txt));
+    };
+    document.querySelectorAll('#newsGrid .news-card').forEach(card => card.hidden = !matches(card));
+    document.querySelectorAll('#homeNewsList .news-card').forEach(card => card.hidden = !matches(card));
   }));
   // If an existing CTA asks for a car, take the visitor to the service form page.
   document.querySelectorAll('[data-find]').forEach(el => el.addEventListener('click', () => {

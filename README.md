@@ -83,3 +83,17 @@ v13: Panel filter (merek, tipe bodi, kapasitas, bahan bakar), urutan (terlaris/t
 - Permintaan foto kini punya batas waktu (6 dtk per permintaan, 22 dtk per kartu) sehingga kartu tidak pernah macet di "MEMUAT FOTO…"; jika foto tidak ditemukan tampil "FOTO MODEL MENYUSUL".
 - `script.js?v=16` dan `style.css?v=16` di index.html mencegah browser memakai file lama dari cache. Setiap kali mengubah script/style, naikkan angka v-nya.
 - Footer menampilkan nomor versi (· v16) untuk memastikan versi terbaru yang terbuka.
+
+## v17 — Berita Otomotif otomatis
+- Website membaca `articles.json` dan menampilkan 6 berita terbaru (judul, ringkasan pendek, gambar kecil, tautan ke sumber).
+- Pembaruan otomatis dilakukan oleh SATU file: `update-news.yml` (sudah berisi skrip Python-nya). Simpan di repo dengan path `.github/workflows/update-news.yml`.
+- Sumber berita diatur di daftar `SOURCES` di dalam file yml itu.
+- Pasang: (1) upload semua file situs ke repo; (2) GitHub: Add file → Create new file → ketik nama `.github/workflows/update-news.yml` → tempel isi `update-news.yml` → Commit; (3) Settings → Actions → General → Workflow permissions → Read and write → Save; (4) tab Actions → "Update berita otomotif" → Run workflow; (5) buka log, baris `[ok]` = sumber berhasil dibaca.
+- Hanya judul + ringkasan pendek yang ditampilkan; pembaca diarahkan ke situs sumber. Untuk menyembunyikan gambar berita, ubah `NEWS_IMAGES` menjadi `false` di script.js.
+
+## v18 — UI/UX
+- Filter diringkas: pencarian + tombol FILTER (panel bisa dibuka/tutup, ada badge jumlah filter aktif) + chip merek yang bisa digeser.
+- Kartu di HP lebih ramping: deskripsi disembunyikan, tombol bandingkan jadi ikon ⇄ di foto, "Tanya harga" hanya tampil bila harga sudah diisi di sheet.
+- Tombol WhatsApp melayang jadi ikon bulat di HP.
+- Tombol "CARIKAN MOBIL" di header, hero, dan banner di bawah katalog.
+- Ukuran huruf terkecil dinaikkan ke 10px, warna teks abu-abu digelapkan.

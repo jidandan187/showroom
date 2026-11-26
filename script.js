@@ -1577,6 +1577,7 @@ function isFiltered(){
   return searchInput.value.trim() || activeFilter !== "all" || filters.brand !== "all" || filters.body !== "all" || filters.seats !== "all" || filters.status !== "all" || filters.cond !== "all";
 }
 function fillBrands(){
+  setTimeout(renderBrandChips, 0);
   const counts = {};
   cars.forEach(car => counts[car.brand] = (counts[car.brand] || 0) + 1);
   brandSelect.innerHTML = '<option value="all">Semua merek</option>' + Object.keys(counts).sort().map(b => `<option value="${b}">${b} (${counts[b]})</option>`).join("");
@@ -1612,17 +1613,18 @@ function renderCars(){
       <div class="car-image">
         <div class="photo-placeholder"><span>${car.brand.toUpperCase()}</span><strong>${car.name}</strong><small>MEMUAT FOTO…</small></div>
         <img class="car-photo" data-car="${car.id}" alt="${car.brand} ${car.name}" hidden>
-        <button class="fav-btn" data-fav="${car.id}" aria-label="Simpan ke favorit" aria-pressed="false">♡</button><span class="car-type">${car.type.toUpperCase()}</span>${car.hot ? '<span class="car-hot">TERLARIS 2026</span>' : ''}<span class="car-number">TS—${String(car.id).padStart(3,"0")}</span>
+        <button class="fav-btn" data-fav="${car.id}" aria-label="Simpan ke favorit" aria-pressed="false">♡</button><button class="compare-btn" data-compare="${car.id}" aria-label="Bandingkan mobil" title="Bandingkan">⇄</button><span class="car-type">${car.type.toUpperCase()}</span>${car.hot ? '<span class="car-hot">TERLARIS 2026</span>' : ''}<span class="car-number">TS—${String(car.id).padStart(3,"0")}</span>
       </div>
       <div class="car-info">
         <div class="car-meta"><span>${car.brand.toUpperCase()}</span><span>${car.year} / ${car.category}</span></div>
         <h3>${car.name}</h3>${chipsHTML(car)}<p class="car-desc">${car.description}</p>
-        <div class="car-bottom"><span class="car-price">${car.price}</span><button class="detail-btn" data-detail="${car.id}">INFO MOBIL ↗</button><button class="compare-btn" data-compare="${car.id}">+ BANDINGKAN</button></div>
+        <div class="car-bottom">${car.price !== "Tanya harga" ? `<span class="car-price">${car.price}</span>` : ""}<button class="detail-btn" data-detail="${car.id}">INFO MOBIL ↗</button></div>
         <a class="car-wa-button" href="${whatsappLink(car)}" target="_blank" rel="noopener">${car.status === "sold" ? "CARI UNIT SERUPA" : "TANYA VIA WHATSAPP"} <span>↗</span></a>
       </div>
     </article>`).join("");
   hydratePhotos(grid);
   syncStates();
+  updateFilterUI();
 
   const hasMore = filtered.length > pageSize && !isFiltered();
   catalogMoreBtn.hidden = !hasMore && !showAllCars;
@@ -1717,7 +1719,7 @@ function syncStates(){
   });
   document.querySelectorAll("[data-compare]").forEach(btn => {
     const on = compareList.includes(Number(btn.dataset.compare));
-    btn.textContent = on ? "✓ DIPILIH" : "+ BANDINGKAN"; btn.classList.toggle("on", on);
+    btn.textContent = on ? "✓" : "⇄"; btn.classList.toggle("on", on);
   });
   favCount.textContent = favorites.length;
   compareBar.hidden = compareList.length === 0;
@@ -1918,3 +1920,64 @@ const SITE_CONFIG = {
   if(SITE_CONFIG.jamBalas) box.insertAdjacentHTML("beforeend", `<span class="contact-card-hint contact-hours">${SITE_CONFIG.jamBalas}</span>`);
   if(links.length) box.insertAdjacentHTML("beforeend", `<span class="social-row">${links.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join("")}</span>`);
 })();
+
+// ===== v17: Berita Otomotif otomatis (dibaca dari articles.json yang diperbarui GitHub Actions) =====
+const NEWS_SHOW = 6;
+const NEWS_IMAGES = true;   // false = tampilkan tanpa gambar
+(async function loadNews(){
+  const sec = document.querySelector("#berita"), grid = document.querySelector("#newsGrid");
+  if(!sec || !grid) return;
+  try{
+    const res = await fetchT("articles.json?t=" + Math.floor(Date.now() / 600000), 8000);
+    if(!res.ok) return;
+    const data = await res.json();
+    const items = (data.items || []).filter(a => a && a.title && /^https?:\/\//i.test(a.link)).slice(0, NEWS_SHOW);
+    if(!items.length) return;
+    items.forEach(a => {
+      const card = document.createElement("a");
+      card.className = "news-card"; card.href = a.link; card.target = "_blank"; card.rel = "noopener noreferrer";
+      if(NEWS_IMAGES && /^https:\/\//i.test(a.image || "")){
+        const thumb = document.createElement("div"); thumb.className = "news-thumb";
+        const img = document.createElement("img"); img.src = a.image; img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
+        img.onerror = () => thumb.remove(); thumb.appendChild(img); card.appendChild(thumb);
+      }
+      const body = document.createElement("div"); body.className = "news-body";
+      const meta = document.createElement("small");
+      const d = a.date ? new Date(a.date) : null;
+      meta.textContent = [String(a.source || "").toUpperCase(), d && !isNaN(d) ? d.toLocaleDateString("id-ID", {day:"numeric", month:"short", year:"numeric"}).toUpperCase() : ""].filter(Boolean).join(" · ");
+      const title = document.createElement("h3"); title.textContent = a.title;
+      body.append(meta, title);
+      if(a.summary){ const p = document.createElement("p"); p.textContent = a.summary; body.appendChild(p); }
+      const more = document.createElement("span"); more.className = "news-more"; more.textContent = "BACA DI SUMBER ↗"; body.appendChild(more);
+      card.appendChild(body); grid.appendChild(card);
+    });
+    const upd = data.updated ? new Date(data.updated) : null;
+    if(upd && !isNaN(upd) && !data.seed) document.querySelector("#newsMeta").textContent = "Diperbarui otomatis, terakhir " + upd.toLocaleString("id-ID", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"}) + ". Klik untuk membaca selengkapnya di situs sumber.";
+    sec.hidden = false;
+  }catch(e){}
+})();
+
+// ===== v18: UI/UX — chip merek, tombol Filter yang bisa dibuka/tutup, CTA carikan mobil =====
+function renderBrandChips(){
+  const box = document.querySelector("#brandChips"); if(!box) return;
+  const counts = {}; cars.forEach(c => counts[c.brand] = (counts[c.brand] || 0) + 1);
+  const brands = Object.keys(counts).sort((a, b) => counts[b] - counts[a] || a.localeCompare(b));
+  box.innerHTML = `<button class="brand-chip" data-brand="all" type="button">SEMUA</button>` + brands.map(b => `<button class="brand-chip" data-brand="${b}" type="button">${b.toUpperCase()}<small>${counts[b]}</small></button>`).join("");
+  updateFilterUI();
+}
+function updateFilterUI(){
+  document.querySelectorAll(".brand-chip").forEach(ch => ch.classList.toggle("active", ch.dataset.brand === filters.brand));
+  const n = ["body", "seats", "status", "cond"].filter(k => filters[k] !== "all").length + (filters.sort !== "rank" ? 1 : 0);
+  const badge = document.querySelector("#filterBadge");
+  if(badge){ badge.textContent = n; badge.hidden = n === 0; }
+}
+document.querySelector("#brandChips").addEventListener("click", event => {
+  const ch = event.target.closest("[data-brand]"); if(!ch) return;
+  filters.brand = ch.dataset.brand; brandSelect.value = filters.brand; showAllCars = false; renderCars();
+});
+document.querySelector("#filterToggle").addEventListener("click", event => {
+  const panel = document.querySelector("#filterPanel"); panel.hidden = !panel.hidden;
+  event.currentTarget.setAttribute("aria-expanded", String(!panel.hidden));
+});
+document.querySelectorAll("[data-find]").forEach(a => a.addEventListener("click", () => showTab("find")));
+renderBrandChips();

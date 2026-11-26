@@ -97,3 +97,8 @@ v13: Panel filter (merek, tipe bodi, kapasitas, bahan bakar), urutan (terlaris/t
 - Tombol WhatsApp melayang jadi ikon bulat di HP.
 - Tombol "CARIKAN MOBIL" di header, hero, dan banner di bawah katalog.
 - Ukuran huruf terkecil dinaikkan ke 10px, warna teks abu-abu digelapkan.
+
+## v19
+- Kolom `status` di sheet kini menerima sinonim: tersedia/stok/siap → Ready, inden/PO → Indent, terjual/habis → Terjual. Nilai yang tidak dikenali tetap menjadi "Bisa dicarikan".
+- Kolom `harga` yang diawali angka otomatis diberi awalan "Rp", dan `km` yang hanya berisi angka diberi akhiran "km".
+- update-news.yml: bila RSS tidak menyertakan gambar, gambar diambil dari halaman artikel (og:image), sehingga semua kartu berita punya gambar.

@@ -1791,9 +1791,12 @@ fillBrands();
 // ===== v14: status unit, booking, form layanan, data Google Sheet, link per mobil =====
 // Isi dengan link CSV Google Sheet yang sudah "Publish to web" (lihat README / data-unit-template.csv).
 // Kosongkan untuk memakai data bawaan.
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvisrbseZM4DF_qLts_PhRpK152Pe9pHuy_mP7ObFks2-1JuvFOI7J23mcDIUFJJlVwlOAIZUD9nlK/pub?output=csv";
+const SHEET_CSV_URL = "";
 const STATUS_LABEL = {ready:"READY", indent:"INDENT", sold:"TERJUAL", cari:"BISA DICARIKAN"};
-const normStatus = v => { v = String(v || "").trim().toLowerCase(); return STATUS_LABEL[v] ? v : "cari"; };
+const STATUS_ALIAS = {tersedia:"ready", stok:"ready", stock:"ready", available:"ready", ada:"ready", siap:"ready", inden:"indent", preorder:"indent", po:"indent", terjual:"sold", habis:"sold", soldout:"sold", dicarikan:"cari", bisadicarikan:"cari"};
+const normStatus = v => { v = String(v || "").toLowerCase().replace(/[^a-z]/g, ""); return STATUS_LABEL[v] ? v : (STATUS_ALIAS[v] || "cari"); };
+const fmtPrice = v => /^\d/.test(v) ? "Rp " + v : v;                 // "250 juta" -> "Rp 250 juta"
+const fmtKm = v => /^[\d.,\s]+$/.test(v) ? v.trim() + " km" : v;      // "90.000" -> "90.000 km"
 cars.forEach(car => { car.status = normStatus(car.status); car.kondisi = car.kondisi || ""; car.photos = car.photos || []; });
 function chipsHTML(car){
   return `<div class="car-chips"><span class="chip chip-${car.status}">${STATUS_LABEL[car.status]}</span>${car.kondisi ? `<span class="chip">${car.kondisi.toUpperCase()}</span>` : ""}${car.warna ? `<span class="chip">${car.warna.toUpperCase()}</span>` : ""}${car.km ? `<span class="chip">${car.km.toUpperCase()}</span>` : ""}</div>`;
@@ -1829,8 +1832,8 @@ async function loadSheet(){
       if(rec.status) car.status = normStatus(rec.status);
       if(rec.kondisi) car.kondisi = rec.kondisi.toLowerCase() === "bekas" ? "bekas" : "baru";
       if(rec.warna) car.warna = rec.warna;
-      if(rec.km) car.km = rec.km;
-      if(rec.harga) car.price = rec.harga;
+      if(rec.km) car.km = fmtKm(rec.km);
+      if(rec.harga) car.price = fmtPrice(rec.harga);
       if(rec.catatan) car.catatan = rec.catatan;
       if(rec.tahun) car.year = Number(rec.tahun) || car.year;
       const photos = [rec.foto1, rec.foto2, rec.foto3].filter(Boolean);

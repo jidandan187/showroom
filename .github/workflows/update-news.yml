@@ -1,4 +1,3 @@
-
 # Update berita otomotif otomatis
 # Path: .github/workflows/update-news.yml
 
@@ -15,7 +14,6 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -25,7 +23,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Ambil berita dari RSS
+      - name: Ambil berita dan gambar dari RSS
         run: |
           python3 - <<'PY'
           import json
@@ -37,16 +35,17 @@ jobs:
           import urllib.parse
           from datetime import datetime, timezone
           from email.utils import parsedate_to_datetime
+          from html.parser import HTMLParser
           import xml.etree.ElementTree as ET
 
           OUT = os.environ.get("NEWS_OUT", "articles.json")
           MAX_ITEMS = 12
           PER_SOURCE = 8
           SUMMARY_CHARS = 170
-
           UA = (
-              "Mozilla/5.0 (compatible; ThomyShowroomBot/1.0; "
-              "+https://jidandan187.github.io/showroom/)"
+              "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/124.0 Safari/537.36 "
+              "ThomyShowroomBot/2.0"
           )
 
           SOURCES = [
@@ -77,370 +76,259 @@ jobs:
           if os.environ.get("FEEDS_OVERRIDE"):
               SOURCES = json.loads(os.environ["FEEDS_OVERRIDE"])
 
-
-          def fetch(url):
+          def fetch(url, limit=None, timeout=20):
               req = urllib.request.Request(
                   url,
                   headers={
                       "User-Agent": UA,
-                      "Accept": "application/rss+xml, application/xml, "
-                                "text/xml, */*"
+                      "Accept": "application/rss+xml, application/atom+xml, "
+                                "application/xml, text/xml, text/html, */*"
                   }
               )
-
-              with urllib.request.urlopen(req, timeout=20) as response:
-                  return response.read()
-
+              with urllib.request.urlopen(req, timeout=timeout) as response:
+                  data = response.read(limit) if limit else response.read()
+                  return data, response.headers.get("Content-Type", "")
 
           def local(tag):
-              return (
-                  tag.rsplit("}", 1)[-1].lower()
-                  if isinstance(tag, str)
-                  else ""
-              )
+              return tag.rsplit("}", 1)[-1].lower() if isinstance(tag, str) else ""
 
-
-          def clean(text, limit=None):
-              text = html.unescape(
-                  re.sub(r"<[^>]+>", " ", text or "")
-              )
-              text = re.sub(r"\s+", " ", text).strip()
-
-              text = re.sub(
+          def clean(value, limit=None):
+              value = html.unescape(re.sub(r"<[^>]+>", " ", value or ""))
+              value = re.sub(r"\s+", " ", value).strip()
+              value = re.sub(
                   r"^[A-Za-z .]{2,40}\((?:ANTARA|[A-Za-z]+)\)\s*[-–]\s*",
-                  "",
-                  text
+                  "", value
               )
-
-              if limit and len(text) > limit:
-                  text = (
-                      text[:limit]
-                      .rsplit(" ", 1)[0]
-                      .rstrip(",.;:- ")
-                      + "…"
-                  )
-
-              return text
-
+              if limit and len(value) > limit:
+                  value = value[:limit].rsplit(" ", 1)[0].rstrip(",.;:- ") + "…"
+              return value
 
           def parse_date(value):
               if not value:
                   return None
-
-              value = value.strip()
-
               try:
-                  dt = parsedate_to_datetime(value)
+                  dt = parsedate_to_datetime(value.strip())
               except Exception:
                   try:
-                      dt = datetime.fromisoformat(
-                          value.replace("Z", "+00:00")
-                      )
+                      dt = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
                   except Exception:
                       return None
-
               if dt.tzinfo is None:
                   dt = dt.replace(tzinfo=timezone.utc)
+              return dt.astimezone(timezone.utc).isoformat(timespec="seconds")
 
-              return dt.astimezone(timezone.utc).isoformat(
-                  timespec="seconds"
-              )
+          def safe_url(value, base=""):
+              value = html.unescape((value or "").strip()).replace("&amp;", "&")
+              if not value or value.startswith(("data:", "javascript:")):
+                  return ""
+              value = urllib.parse.urljoin(base, value) if base else value
+              parsed = urllib.parse.urlparse(value)
+              if parsed.scheme not in ("http", "https") or not parsed.netloc:
+                  return ""
+              return value
 
-
-          def safe_url(url):
-              url = (url or "").strip()
-
-              if re.match(r"^https?://", url, re.I):
-                  return url
-
+          def image_from_html(fragment, base=""):
+              if not fragment:
+                  return ""
+              # Gambar dalam description/content:encoded.
+              patterns = [
+                  r'<img\b[^>]*?\bsrc\s*=\s*["\']([^"\']+)["\']',
+                  r'<img\b[^>]*?\bdata-src\s*=\s*["\']([^"\']+)["\']',
+                  r'<source\b[^>]*?\bsrcset\s*=\s*["\']([^"\']+)["\']'
+              ]
+              for pattern in patterns:
+                  match = re.search(pattern, fragment, re.I)
+                  if match:
+                      candidate = match.group(1).split(",")[0].strip().split(" ")[0]
+                      result = safe_url(candidate, base)
+                      if result:
+                          return result
               return ""
 
+          def rss_image(entry, article_link):
+              # Cari media:content, media:thumbnail, enclosure, image dan
+              # URL gambar yang mungkin berada di elemen bersarang.
+              for node in entry.iter():
+                  tag = local(node.tag)
+                  attrs = {str(k).lower(): v for k, v in node.attrib.items()}
+                  candidates = []
+                  if tag in ("content", "thumbnail", "enclosure", "image"):
+                      candidates.extend([
+                          attrs.get("url"), attrs.get("href"), attrs.get("src")
+                      ])
+                  if tag == "link" and attrs.get("rel", "").lower() == "enclosure":
+                      candidates.extend([attrs.get("href")])
+                  for candidate in candidates:
+                      url = safe_url(candidate, article_link)
+                      if url:
+                          media_type = (
+                              attrs.get("type", "") + " " +
+                              attrs.get("medium", "") + " " + tag
+                          ).lower()
+                          if tag in ("thumbnail", "image") or "image" in media_type or not attrs.get("type"):
+                              return url
+              # Fallback untuk HTML di description/content:encoded.
+              for node in entry.iter():
+                  if local(node.tag) in ("description", "encoded", "summary", "content"):
+                      found = image_from_html(node.text or "", article_link)
+                      if found:
+                          return found
+              return ""
+
+          class MetaImageParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.images = []
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() != "meta":
+                      return
+                  a = {k.lower(): v for k, v in attrs if k and v}
+                  key = (a.get("property") or a.get("name") or "").lower()
+                  if key in ("og:image", "og:image:url", "twitter:image", "twitter:image:src"):
+                      self.images.append(a.get("content", ""))
+
+          def page_image(url):
+              try:
+                  data, _ = fetch(url, limit=500000, timeout=12)
+                  page = data.decode("utf-8", "ignore")
+                  parser = MetaImageParser()
+                  parser.feed(page)
+                  for candidate in parser.images:
+                      result = safe_url(candidate, url)
+                      if result:
+                          return result
+                  # JSON-LD sering menyimpan image sebagai string atau object.
+                  for match in re.findall(
+                      r'"image"\s*:\s*(?:"([^"]+)"|\{[^}]*"url"\s*:\s*"([^"]+)")',
+                      page, re.I
+                  ):
+                      candidate = match[0] or match[1]
+                      result = safe_url(candidate, url)
+                      if result:
+                          return result
+              except Exception as error:
+                  print(f"[image] metadata gagal {url}: {error}")
+              return ""
+
+          def image_is_reachable(url):
+              if not url:
+                  return False
+              try:
+                  req = urllib.request.Request(
+                      url, headers={"User-Agent": UA, "Range": "bytes=0-1023"}
+                  )
+                  with urllib.request.urlopen(req, timeout=10) as response:
+                      content_type = response.headers.get("Content-Type", "").lower()
+                      sample = response.read(32)
+                  return content_type.startswith("image/") or sample.startswith(
+                      (b"\xff\xd8\xff", b"\x89PNG", b"GIF8", b"RIFF")
+                  )
+              except Exception:
+                  return False
 
           def parse_feed(data, source):
               root = ET.fromstring(data)
-
               entries = [
-                  element
-                  for element in root.iter()
+                  element for element in root.iter()
                   if local(element.tag) in ("item", "entry")
               ]
-
               items = []
-
               for entry in entries[:PER_SOURCE * 2]:
-                  article = {
-                      "title": "",
-                      "link": "",
-                      "date": None,
-                      "desc": "",
-                      "image": ""
-                  }
-
+                  article = {"title": "", "link": "", "date": None, "desc": "", "image": ""}
                   for child in entry:
                       tag = local(child.tag)
                       value = (child.text or "").strip()
-
-                      if tag == "title":
+                      if tag == "title" and not article["title"]:
                           article["title"] = clean(value)
-
                       elif tag == "link":
                           article["link"] = (
                               safe_url(child.attrib.get("href") or value)
                               or article["link"]
                           )
-
-                      elif tag in (
-                          "pubdate",
-                          "published",
-                          "updated",
-                          "date"
-                      ) and not article["date"]:
+                      elif tag in ("pubdate", "published", "updated", "date") and not article["date"]:
                           article["date"] = parse_date(value)
-
-                      elif tag in (
-                          "description",
-                          "summary"
-                      ) and not article["desc"]:
+                      elif tag in ("description", "summary", "encoded") and not article["desc"]:
                           article["desc"] = value
-
-                      elif tag == "encoded" and not article["desc"]:
-                          article["desc"] = value
-
-                      elif tag in (
-                          "content",
-                          "thumbnail",
-                          "enclosure"
-                      ):
-                          image_url = safe_url(
-                              child.attrib.get("url")
-                          )
-
-                          image_type = (
-                              child.attrib.get("type")
-                              or child.attrib.get("medium")
-                              or "image"
-                          ).lower()
-
-                          if (
-                              image_url
-                              and "image" in image_type
-                              and not article["image"]
-                          ):
-                              article["image"] = image_url
-
-                  if not article["image"]:
-                      match = re.search(
-                          r'<img[^>]+src=["\']([^"\']+)["\']',
-                          article["desc"],
-                          re.I
-                      )
-
-                      if match:
-                          article["image"] = safe_url(
-                              html.unescape(match.group(1))
-                          )
-
                   if article["title"] and article["link"]:
+                      article["image"] = rss_image(entry, article["link"])
                       items.append({
                           "title": article["title"],
                           "link": article["link"],
                           "source": source,
                           "date": article["date"],
-                          "summary": clean(
-                              article["desc"],
-                              SUMMARY_CHARS
-                          ),
+                          "summary": clean(article["desc"], SUMMARY_CHARS),
                           "image": article["image"]
                       })
-
               return items[:PER_SOURCE]
-
-
-          def og_image(url):
-              try:
-                  req = urllib.request.Request(
-                      url,
-                      headers={"User-Agent": UA}
-                  )
-
-                  with urllib.request.urlopen(req, timeout=10) as response:
-                      page = response.read(300000).decode(
-                          "utf-8",
-                          "ignore"
-                      )
-
-              except Exception:
-                  return ""
-
-              patterns = [
-                  r'<meta[^>]+(?:property|name)=["\']'
-                  r'(?:og:image|twitter:image)["\'][^>]*'
-                  r'content=["\']([^"\']+)["\']',
-
-                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]*'
-                  r'(?:property|name)=["\']'
-                  r'(?:og:image|twitter:image)["\']'
-              ]
-
-              for pattern in patterns:
-                  match = re.search(pattern, page, re.I)
-
-                  if match:
-                      return safe_url(
-                          urllib.parse.urljoin(
-                              url,
-                              html.unescape(match.group(1))
-                          )
-                      )
-
-              return ""
-
-
-          def discover(base, data):
-              page = data.decode("utf-8", "ignore")
-
-              found = re.findall(
-                  r'<link[^>]+type=["\']application/'
-                  r'(?:rss|atom)\+xml["\'][^>]*href=["\']([^"\']+)["\']',
-                  page,
-                  re.I
-              )
-
-              found += re.findall(
-                  r'href=["\']([^"\']+\.xml)["\']',
-                  page,
-                  re.I
-              )
-
-              results = []
-
-              for feed in found:
-                  url = urllib.parse.urljoin(base, feed)
-
-                  if url not in results:
-                      results.append(url)
-
-              return results[:5]
-
 
           def load_source(source):
               for url in source["urls"]:
                   try:
-                      data = fetch(url)
-
+                      data, _ = fetch(url)
                       try:
-                          items = parse_feed(
-                              data,
-                              source["name"]
-                          )
-
+                          items = parse_feed(data, source["name"])
                       except ET.ParseError:
                           items = []
-
-                          for alternative in discover(url, data):
-                              try:
-                                  items = parse_feed(
-                                      fetch(alternative),
-                                      source["name"]
-                                  )
-
-                                  if items:
-                                      break
-
-                              except Exception:
-                                  continue
-
                       if items:
-                          print(
-                              f"[ok] {source['name']}: "
-                              f"{len(items)} berita dari {url}"
-                          )
+                          print(f"[ok] {source['name']}: {len(items)} berita dari {url}")
                           return items
-
-                      print(
-                          f"[kosong] {source['name']}: {url}"
-                      )
-
+                      print(f"[kosong] {source['name']}: {url}")
                   except Exception as error:
-                      print(
-                          f"[gagal] {source['name']}: "
-                          f"{url} -> {error}"
-                      )
-
+                      print(f"[gagal] {source['name']}: {url} -> {error}")
               return []
 
-
           def main():
-              items = []
-              seen = set()
-
+              items, seen = [], set()
               for source in SOURCES:
                   for article in load_source(source):
-                      key = re.sub(
-                          r"[?#].*$",
-                          "",
-                          article["link"]
-                      )
-
+                      key = re.sub(r"[?#].*$", "", article["link"]).rstrip("/")
                       if key not in seen:
                           seen.add(key)
                           items.append(article)
 
               if not items:
-                  print(
-                      "Tidak ada berita yang berhasil diambil; "
-                      "articles.json dibiarkan seperti semula."
-                  )
+                  print("Tidak ada berita yang berhasil diambil; articles.json dibiarkan.")
                   return 0
 
-              items.sort(
-                  key=lambda article: article["date"] or "",
-                  reverse=True
-              )
-
+              items.sort(key=lambda a: a["date"] or "", reverse=True)
               items = items[:MAX_ITEMS]
 
-              fetched = 0
-
-              for article in items:
-                  if not article["image"] and fetched < 12:
-                      fetched += 1
-                      article["image"] = og_image(
-                          article["link"]
-                      )
+              for index, article in enumerate(items, 1):
+                  if not article["image"]:
+                      article["image"] = page_image(article["link"])
+                  if article["image"] and not image_is_reachable(article["image"]):
+                      print(f"[image] URL gambar tidak valid, dikosongkan: {article['title']}")
+                      article["image"] = ""
+                  print(
+                      f"[{index}/{len(items)}] "
+                      f"{'gambar OK' if article['image'] else 'tanpa gambar'}: "
+                      f"{article['title'][:75]}"
+                  )
 
               try:
                   with open(OUT, encoding="utf-8") as file:
-                      old = json.load(file).get("items")
-
+                      old_data = json.load(file)
+                      old = old_data.get("items")
               except Exception:
                   old = None
 
               if old == items:
-                  print("Tidak ada perubahan.")
+                  print("Tidak ada perubahan pada daftar berita.")
                   return 0
 
               data = {
-                  "updated": datetime.now(
-                      timezone.utc
-                  ).isoformat(timespec="seconds"),
+                  "updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                   "items": items
               }
-
               with open(OUT, "w", encoding="utf-8") as file:
-                  json.dump(
-                      data,
-                      file,
-                      ensure_ascii=False,
-                      indent=2
-                  )
+                  json.dump(data, file, ensure_ascii=False, indent=2)
 
+              with_images = sum(1 for article in items if article["image"])
               print(
-                  f"articles.json diperbarui: {len(items)} berita."
+                  f"articles.json diperbarui: {len(items)} berita, "
+                  f"{with_images} memiliki gambar valid."
               )
-
               return 0
-
 
           if __name__ == "__main__":
               sys.exit(main())
@@ -450,10 +338,9 @@ jobs:
         run: |
           git config user.name "news-bot"
           git config user.email "news-bot@users.noreply.github.com"
-
           git add articles.json
-
           git diff --cached --quiet || (
             git commit -m "Update berita otomotif" &&
             git push
           )
+          

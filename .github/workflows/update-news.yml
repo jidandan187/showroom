@@ -179,33 +179,45 @@ jobs:
               def __init__(self):
                   super().__init__()
                   self.images = []
+                  self.content_images = []
               def handle_starttag(self, tag, attrs):
-                  if tag.lower() != "meta":
-                      return
                   a = {k.lower(): v for k, v in attrs if k and v}
-                  key = (a.get("property") or a.get("name") or "").lower()
-                  if key in ("og:image", "og:image:url", "twitter:image", "twitter:image:src"):
-                      self.images.append(a.get("content", ""))
+                  if tag.lower() == "meta":
+                      key = (a.get("property") or a.get("name") or "").lower()
+                      if key in ("og:image", "og:image:url", "twitter:image", "twitter:image:src"):
+                          self.images.append(a.get("content", ""))
+                      if a.get("itemprop", "").lower() == "image":
+                          self.images.append(a.get("content", "") or a.get("src", ""))
+                  elif tag.lower() in ("img", "source"):
+                      candidate = a.get("data-src") or a.get("data-lazy-src") or a.get("src") or ""
+                      if not candidate and a.get("srcset"):
+                          candidate = a["srcset"].split(",")[0].strip().split(" ")[0]
+                      if candidate:
+                          self.content_images.append(candidate)
 
           def page_image(url):
               try:
-                  data, _ = fetch(url, limit=500000, timeout=12)
+                  data, _ = fetch(url, limit=1200000, timeout=15)
                   page = data.decode("utf-8", "ignore")
                   parser = MetaImageParser()
                   parser.feed(page)
-                  for candidate in parser.images:
-                      result = safe_url(candidate, url)
-                      if result:
-                          return result
-                  # JSON-LD sering menyimpan image sebagai string atau object.
+                  # Metadata sosial/SEO adalah sumber paling akurat.
+                  candidates = list(parser.images)
+                  # JSON-LD bisa berisi array gambar atau objek ImageObject.
                   for match in re.findall(
-                      r'"image"\s*:\s*(?:"([^"]+)"|\{[^}]*"url"\s*:\s*"([^"]+)")',
+                      r'"image"\s*:\s*(?:"([^"]+)"|\[\s*"([^"]+)"|\{[^}]*?"url"\s*:\s*"([^"]+)")',
                       page, re.I
                   ):
-                      candidate = match[0] or match[1]
+                      candidates.extend([value for value in match if value])
+                  # Jika publisher tidak menyediakan metadata, coba gambar konten artikel.
+                  candidates.extend(parser.content_images[:12])
+                  seen_candidates = set()
+                  for candidate in candidates:
                       result = safe_url(candidate, url)
-                      if result:
-                          return result
+                      if result and result not in seen_candidates:
+                          seen_candidates.add(result)
+                          if image_is_reachable(result):
+                              return result
               except Exception as error:
                   print(f"[image] metadata gagal {url}: {error}")
               return ""

@@ -29,44 +29,59 @@
       }
     }
   });
-  const fillNews = () => {
-    const cards = [...document.querySelectorAll('#newsGrid .news-card')];
-    if (!cards.length) return;
-    const feature = document.getElementById('homeFeatured');
-    const list = document.getElementById('homeNewsList');
-    if (feature && !feature.dataset.ready) {
-      const first = cards[0].cloneNode(true);
-      first.classList.add('featured-news-card');
-      feature.replaceChildren(first);
-      feature.dataset.ready = '1';
-    }
-    if (list && !list.dataset.ready) {
-      list.replaceChildren(...cards.slice(1,4).map(c => c.cloneNode(true)));
-      list.dataset.ready = '1';
-    }
+
+  // Categorize from article headline/summary only; source names must not affect filtering.
+  const classifyNews = card => {
+    const title = card.querySelector('.news-body h3')?.textContent || '';
+    const summary = card.querySelector('.news-body p')?.textContent || '';
+    const text = `${title} ${summary}`.toLowerCase();
+    if (/mobil listrik|kendaraan listrik|\bev\b|baterai|charging|pengisian daya|hybrid|plug.?in|phev|byd|ioniq|aion|air ev|vinfast|neta|wuling cloud/.test(text)) return 'ev';
+    if (/mobil baru|model baru|meluncur|peluncuran|diluncurkan|resmi hadir|resmi meluncur|facelift|generasi terbaru|debut|penyegaran|hadir dengan desain/.test(text)) return 'new';
+    if (/industri|pabrik|penjualan|pasar|ekspor|impor|produksi|investasi|manufaktur|persaingan|segmen|merek terlaris|distribusi|kebijakan|menperin|target penjualan|pangsa pasar/.test(text)) return 'industry';
+    return 'other';
   };
+  let activeNewsFilter = 'all';
   const grid = document.getElementById('newsGrid');
+  const feature = document.getElementById('homeFeatured');
+  const list = document.getElementById('homeNewsList');
+  const getCards = () => grid ? [...grid.querySelectorAll('.news-card')] : [];
+  const updateHomeNews = matching => {
+    if (!feature || !list) return;
+    if (!matching.length) {
+      feature.innerHTML = '<div class="home-news-empty">Belum ada berita untuk kategori ini.</div>';
+      list.replaceChildren();
+      return;
+    }
+    const featured = matching[0].cloneNode(true);
+    featured.classList.add('featured-news-card');
+    featured.hidden = false;
+    feature.replaceChildren(featured);
+    list.replaceChildren(...matching.slice(1,4).map(card => {
+      const clone = card.cloneNode(true); clone.hidden = false; return clone;
+    }));
+  };
+  const applyNewsFilter = term => {
+    activeNewsFilter = term;
+    document.querySelectorAll('[data-news-filter]').forEach(btn => {
+      const active = btn.dataset.newsFilter === term;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+    const all = getCards();
+    const matching = all.filter(card => term === 'all' || classifyNews(card) === term);
+    all.forEach(card => { card.hidden = !matching.includes(card); });
+    updateHomeNews(matching);
+    const empty = document.getElementById('newsEmptyState');
+    if (empty) empty.hidden = matching.length !== 0;
+  };
+  document.querySelectorAll('[data-news-filter]').forEach(btn => {
+    btn.setAttribute('aria-pressed', String(btn.dataset.newsFilter === 'all'));
+    btn.addEventListener('click', () => applyNewsFilter(btn.dataset.newsFilter));
+  });
   if (grid) {
-    new MutationObserver(fillNews).observe(grid,{childList:true});
-    fillNews();
+    new MutationObserver(() => applyNewsFilter(activeNewsFilter)).observe(grid,{childList:true});
+    applyNewsFilter('all');
   }
-  // News category chips are a light filter; original article links stay intact.
-  document.querySelectorAll('[data-news-filter]').forEach(btn => btn.addEventListener('click', () => {
-    const term = btn.dataset.newsFilter;
-    const group = btn.parentElement;
-    group.querySelectorAll('[data-news-filter]').forEach(b => b.classList.toggle('active', b === btn));
-    const matches = card => {
-      const txt = card.textContent.toLowerCase();
-      return term === 'all' || (term === 'ev'
-        ? /listrik|ev|hybrid|baterai|charging|byd|ioniq|aion/.test(txt)
-        : term === 'industry'
-          ? /industri|pabrik|penjualan|pasar|otomotif|produksi/.test(txt)
-          : /baru|launch|meluncur|resmi|facelift|generasi/.test(txt));
-    };
-    document.querySelectorAll('#newsGrid .news-card').forEach(card => card.hidden = !matches(card));
-    document.querySelectorAll('#homeNewsList .news-card').forEach(card => card.hidden = !matches(card));
-  }));
-  // If an existing CTA asks for a car, take the visitor to the service form page.
   document.querySelectorAll('[data-find]').forEach(el => el.addEventListener('click', () => {
     setView('about',false);
     setTimeout(() => document.querySelector('#layanan')?.scrollIntoView({behavior:'smooth',block:'start'}),80);

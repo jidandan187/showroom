@@ -1954,10 +1954,22 @@ const NEWS_IMAGES = true;   // false = tampilkan tanpa gambar
     items.forEach(a => {
       const card = document.createElement("a");
       card.className = "news-card"; card.dataset.newsCategory = classifyNewsArticle(a); card.href = a.link; card.target = "_blank"; card.rel = "noopener noreferrer";
-      if(NEWS_IMAGES && /^https:\/\//i.test(a.image || "")){
+      if(NEWS_IMAGES){
         const thumb = document.createElement("div"); thumb.className = "news-thumb";
-        const img = document.createElement("img"); img.src = a.image; img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
-        img.onerror = () => thumb.remove(); thumb.appendChild(img); card.appendChild(thumb);
+        const fallback = () => {
+          thumb.classList.add("news-thumb-fallback");
+          thumb.replaceChildren();
+          const mark = document.createElement("span");
+          mark.className = "news-thumb-fallback-mark";
+          mark.textContent = classifyNewsArticle(a) === "ev" ? "EV / MOBIL LISTRIK" : classifyNewsArticle(a) === "new" ? "MODEL TERBARU" : "UPDATE OTOMOTIF";
+          const note = document.createElement("small"); note.textContent = "ILUSTRASI";
+          thumb.append(mark, note);
+        };
+        if(/^https?:\/\//i.test(a.image || "")){
+          const img = document.createElement("img"); img.src = a.image; img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
+          img.onerror = fallback; thumb.appendChild(img);
+        } else fallback();
+        card.appendChild(thumb);
       }
       const body = document.createElement("div"); body.className = "news-body";
       const meta = document.createElement("small");

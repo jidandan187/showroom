@@ -1924,6 +1924,21 @@ const SITE_CONFIG = {
   if(links.length) box.insertAdjacentHTML("beforeend", `<span class="social-row">${links.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join("")}</span>`);
 })();
 
+// Klasifikasi berita berbasis metadata + judul/ringkasan artikel.
+// Prioritas EV didahulukan agar artikel mobil listrik tidak terserap ke kategori industri.
+function classifyNewsArticle(article = {}) {
+  const explicit = String(article.category || article.kategori || '').toLowerCase().trim();
+  if (['ev', 'electric', 'mobil listrik', 'kendaraan listrik'].includes(explicit)) return 'ev';
+  if (['new', 'mobil baru', 'peluncuran'].includes(explicit)) return 'new';
+  if (['industry', 'industri'].includes(explicit)) return 'industry';
+  const text = `${article.title || ''} ${article.summary || ''}`.toLowerCase();
+  const has = pattern => pattern.test(text);
+  if (has(/mobil listrik|kendaraan listrik|kendaraan berbasis baterai|\bev\b|baterai|charging|pengisian daya|hybrid|plug.?in|phev|air ev|cloud ev|mg 4 ev/)) return 'ev';
+  if (has(/mobil baru|model baru|mobil terbaru|model terbaru|meluncur|peluncuran|diluncurkan|resmi hadir|resmi meluncur|facelift|generasi terbaru|debut|penyegaran|perkenalkan|memperkenalkan|launching|launch/)) return 'new';
+  if (has(/industri|pabrik|penjualan|terlaris|pasar|ekspor|impor|produksi|investasi|manufaktur|persaingan|segmen|distribusi|kebijakan|menperin|target penjualan|pangsa pasar|produsen|merek mobil|merek otomotif/)) return 'industry';
+  return 'other';
+}
+
 // ===== v17: Berita Otomotif otomatis (dibaca dari articles.json yang diperbarui GitHub Actions) =====
 const NEWS_SHOW = 6;
 const NEWS_IMAGES = true;   // false = tampilkan tanpa gambar
@@ -1938,7 +1953,7 @@ const NEWS_IMAGES = true;   // false = tampilkan tanpa gambar
     if(!items.length) return;
     items.forEach(a => {
       const card = document.createElement("a");
-      card.className = "news-card"; card.href = a.link; card.target = "_blank"; card.rel = "noopener noreferrer";
+      card.className = "news-card"; card.dataset.newsCategory = classifyNewsArticle(a); card.href = a.link; card.target = "_blank"; card.rel = "noopener noreferrer";
       if(NEWS_IMAGES && /^https:\/\//i.test(a.image || "")){
         const thumb = document.createElement("div"); thumb.className = "news-thumb";
         const img = document.createElement("img"); img.src = a.image; img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
